@@ -6,7 +6,6 @@ import { AiFillStar } from "react-icons/ai";
 import { FiExternalLink, FiGitBranch } from "react-icons/fi";
 import { RiGitRepositoryLine, RiUserFollowLine, RiUserSharedLine } from "react-icons/ri";
 import { BiCodeBlock } from "react-icons/bi";
-
 import fetcher from "utils/fetcher";
 
 type RepoSummary = {
@@ -47,7 +46,10 @@ function formatDate(value?: string) {
 }
 
 export default function Projects() {
-  const { data, error, isLoading } = useSWR<GithubSummary>("/api/github", fetcher);
+  const { data, isLoading } = useSWR<GithubSummary>("/api/github", fetcher, {
+    revalidateOnFocus: false,
+    dedupingInterval: 5 * 60 * 1000,
+  });
 
   const stats = [
     {
@@ -135,7 +137,7 @@ export default function Projects() {
         <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
           Stats
         </h2>
-        {error ? (
+        {!data ? (
           <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-200">
             GitHub data is temporarily unavailable. Please try again in a moment.
           </div>

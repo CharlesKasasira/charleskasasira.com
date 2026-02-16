@@ -13,6 +13,11 @@ const skills = [
 const timeline = [
   {
     org: "RENU",
+    role: "Software Engineer | DevOps",
+    date: "Present",
+  },
+  {
+    org: "RENU",
     role: "Intern",
     date: "Aug 2023",
   },
