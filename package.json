@@ -4,7 +4,7 @@
     "name": "Charles Kasasira",
     "url": "https://charleskasasira.com"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "engines": {
     "node": "24.x"
@@ -12,7 +12,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
@@ -25,10 +25,10 @@
     "framer-motion": "^11.0.0",
     "googleapis": "^109.0.0",
     "http": "^0.0.1-security",
-    "next": "^14.2.0",
+    "next": "^16.1.0",
     "next-themes": "^0.4.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-ga": "^3.3.1",
     "react-icons": "^5.4.0",
     "sitemap": "^7.1.1",
@@ -36,15 +36,15 @@
     "swr": "^2.2.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22.0.0",
-    "@types/react": "^18.3.0",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.20",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.0",
+    "eslint-config-next": "^16.1.0",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.0",
+    "tailwindcss": "^4.1.0",
     "typescript": "^5.0.0"
   }
 }

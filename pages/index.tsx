@@ -205,7 +205,7 @@ export default function Home() {
           {featuredWork.map((item) => (
             <article
               key={item.name}
-              className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60"
+              className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60"
             >
               <h3 className="mb-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 {item.name}

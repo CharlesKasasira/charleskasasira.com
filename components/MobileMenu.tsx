@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import Link from 'next/link';
 import useDelayedRender from 'utils/useDelayedRender';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type SVGProps } from 'react';
 import styles from 'styles/mobile-menu.module.css';
 import { menuData } from 'utils/menuData';
 
@@ -83,7 +83,7 @@ export default function MobileMenu() {
   );
 }
 
-function MenuIcon(props: JSX.IntrinsicElements['svg']) {
+function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
@@ -111,7 +111,7 @@ function MenuIcon(props: JSX.IntrinsicElements['svg']) {
   );
 }
 
-function CrossIcon(props: JSX.IntrinsicElements['svg']) {
+function CrossIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
