@@ -1,42 +1,56 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import axios from "axios"
-const fs = require("fs");
+import { type NextRequest } from "next/server";
 
-type Data = {
-  name: string
+export const config = {
+  runtime: "edge",
+};
+
+const DEFAULT_USERNAME = "charleskasasira";
+const VALID_USERNAME = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
+
+function resolveUsername(value: string | null): string {
+  if (!value) return DEFAULT_USERNAME;
+  return VALID_USERNAME.test(value) ? value : DEFAULT_USERNAME;
 }
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  const user = "charleskasasira"
-const file = "githuGraph.json"
+export default async function handler(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const username = resolveUsername(searchParams.get("username"));
+  const contributionsUrl = `https://github.com/users/${username}/contributions`;
 
-fetch("https://github.com/users/{user}/contributions".replace("{user}", user))
-  .then((res) => res.text())
-  .then(loadGraph);
+  try {
+    const response = await fetch(contributionsUrl, {
+      headers: {
+        accept: "image/svg+xml",
+        "user-agent": "charleskasasira.com",
+      },
+    });
 
-  function loadGraph(text) {
-    var data,
-      re = /(data-count="\d".*data-date="\d{4}-\d{2}-\d{2}")/g,
-      matches = text.match(re);
-    data = matches.map(function (match) {
-      return {
-        count: +match.match(/data-count="(\d)"/)[1],
-        date: match.match(/data-date="(\d{4}-\d{2}-\d{2})"/)[1],
-      };
+    if (!response.ok) {
+      return new Response("Unable to load contributions graph.", {
+        status: 502,
+        headers: {
+          "content-type": "text/plain; charset=utf-8",
+          "cache-control": "public, s-maxage=300, stale-while-revalidate=300",
+        },
+      });
+    }
+
+    const svg = await response.text();
+
+    return new Response(svg, {
+      status: 200,
+      headers: {
+        "content-type": "image/svg+xml; charset=utf-8",
+        "cache-control": "public, s-maxage=1200, stale-while-revalidate=600",
+      },
     });
-    fs.writeFile(file, JSON.stringify(data, null, 2), function (err) {
-      if (err) console.error(err);
-      else console.info("Exported %d days' events", data.length);
+  } catch (error) {
+    return new Response("Unable to load contributions graph.", {
+      status: 500,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, s-maxage=300, stale-while-revalidate=300",
+      },
     });
-    console.log(data)
-    res.status(200).json({ name: data })
   }
-  // res.status(200).json({ name: 'Failed' })
-  // res.status(200).json({message: "hello world"})
-
-  
 }
