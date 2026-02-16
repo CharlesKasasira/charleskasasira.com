@@ -1,321 +1,285 @@
-import { Suspense } from "react";
 import Container from "components/Container";
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   AiFillGithub,
+  AiFillLinkedin,
   AiFillYoutube,
   AiOutlineTwitter,
-  AiFillLinkedin,
 } from "react-icons/ai";
-import { MdOutlineWorkOutline } from "react-icons/md";
-import { motion } from "framer-motion";
-import Link from "next/link";
+
+const socialLinks = [
+  {
+    name: "GitHub",
+    href: "https://github.com/charleskasasira",
+    icon: <AiFillGithub size={24} />,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/charleskasasira/",
+    icon: <AiFillLinkedin size={24} />,
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw",
+    icon: <AiFillYoutube size={24} />,
+  },
+  {
+    name: "Twitter",
+    href: "https://twitter.com/kasasirac",
+    icon: <AiOutlineTwitter size={24} />,
+  },
+];
+
+const focusAreas = [
+  {
+    title: "Product Engineering",
+    description:
+      "Building polished web products from concept to deployment with a focus on performance and usability.",
+  },
+  {
+    title: "Creative Development",
+    description:
+      "Designing visual experiences that feel intentional, fast, and easy to understand on any device.",
+  },
+  {
+    title: "Education Content",
+    description:
+      "Sharing practical tutorials on YouTube to help developers ship clean and production-ready features.",
+  },
+];
+
+const featuredWork = [
+  {
+    name: "Project Showcase",
+    description:
+      "A curated view of my open-source and client projects with GitHub stats and contribution activity.",
+    href: "/projects",
+    cta: "View projects",
+  },
+  {
+    name: "Live YouTube Metrics",
+    description:
+      "A real-time dashboard that tracks channel growth, total views, and uploaded videos.",
+    href: "/youtube",
+    cta: "Open dashboard",
+  },
+  {
+    name: "Technical Writing",
+    description:
+      "Hands-on frontend engineering breakdowns and implementation guides published on my blog.",
+    href: "https://blog.charleskasasira.me",
+    cta: "Read articles",
+    external: true,
+  },
+];
+
+const recentPosts = [
+  {
+    title: "CSS Art: Instagram Logo with pure CSS",
+    date: "May 21, 2022",
+    href: "https://blog.charleskasasira.me/css-art-instagram-logo-with-pure-css",
+  },
+  {
+    title: "Cheat sheet: Arrays in JavaScript",
+    date: "Jan 22, 2022",
+    href: "https://blog.charleskasasira.me/cheat-sheet-arrays-in-javascript",
+  },
+  {
+    title: "HOW TO: Click outside to close in Javascript",
+    date: "Jan 18, 2022",
+    href: "https://blog.charleskasasira.me/how-to-click-outside-to-close-in-javascript",
+  },
+];
+
+const videoIds = ["FtpN8QI9PuA", "1czjJGA5dHQ", "DAYoeJgolYg"];
 
 export default function Home() {
-  const variants = {
-    hidden: { opacity: 0, x: -200, y: 0 },
-    enter: { opacity: 1, x: 0, y: 0 },
-    exit: { opacity: 0, x: 0, y: -100 },
-  };
-
   return (
-    <Suspense fallback={null}>
-      <Container>
-        <div className="flex flex-col mt-5">
-          <div className="flex flex-col-reverse items-start">
-            <div className="flex flex-col md:pr-8">
-              <div className="overflow-x-hidden">
-                <motion.h1
-                  variants={variants} // Pass the variant object into Framer Motion
-                  initial="hidden" // Set the initial state to variants.hidden
-                  animate="enter" // Animated state to variants.enter
-                  exit="exit" // Exit state (used later) to variants.exit
-                  transition={{ type: "linear" }} // Set the transition to linear
-                  className="font-bold text-3xl md:text-4xl tracking-tight mb-5 text-black dark:text-white font-sans"
-                >
-                  Software designer + developer,
-                  <br />
-                  and small youtuber
-                </motion.h1>
-              </div>
-
-              <p className="mb-5 w-full">
-                Hello, I&apos;m Charles Kasasira, a software designer and
-                developer based in Kampala, Uganda 🇺🇬. I am currently doing my final year in Computer Science at{" "}
-                <span className="font-medium text-gray-700 dark:text-gray-300 underline cursor-pointer">
-                  <a
-                    href="https://mak.ac.ug"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Makerere University
-                  </a>
-                </span>{" "}. Over the past 3 years, I have had the privilege of working on a wide range of projects, each presenting its own unique challenges and opportunities. 
-                These experiences have allowed me to become proficient in multiple computing concepts, programming languages and development frameworks, equipping me with the versatility needed 
-                to adapt to the ever-evolving tech landscape. 
-                When I&apos;m not immersed in lines of code, I record and edit
-                tutorial-based videos on my small space on{" "}
-                <span className="font-medium text-gray-700 dark:text-gray-300 underline cursor-pointer">
-                  <a href="https://youtube.com/@charleskasasira">youtube</a>
-                </span>{" "}
-                .
-              </p>
-            </div>
-            <div className="mb-5">
-              <Image
-                src="/pole.png"
-                alt="Charles Kasasira"
-                width={80}
-                height={80}
-                placeholder="blur"
-                blurDataURL="/pole.png"
-              />
-            </div>
-          </div>
-          <div className="flex gap-2 mb-10 md:mb-10">
-            <a
-              href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiFillYoutube
-                size={25}
-                className="cursor-pointer text-neutral-500"
-              />
-            </a>
-            <a
-              href="https://www.github.com/charleskasasira"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiFillGithub
-                size={25}
-                className="cursor-pointer text-neutral-500"
-              />
-            </a>
-            <a
-              href="https://www.twitter.com/kasasirac"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiOutlineTwitter
-                size={25}
-                className="cursor-pointer text-neutral-500"
-              />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/charleskasasira/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <AiFillLinkedin
-                size={25}
-                className="cursor-pointer text-neutral-500"
-              />
-            </a>
-          </div>
-
-          <div className="my-10 flex flex-col md:flex-row gap-5">
-            <iframe
-              // width="400"
-              height="250"
-              loading="lazy"
-              title="How to create a custom upload file input by Charles Kasasira"
-              className="outline outline-1 rounded hover:shadow-2xl -rotate-2"
-              src="https://www.youtube.com/embed/FtpN8QI9PuA"
-            ></iframe>
-            <iframe
-              // width="400"
-              height="250"
-              loading="lazy"
-              title="How to create a custom upload file input by Charles Kasasira"
-              className="outline outline-1 rounded hover:shadow-2xl rotate-2"
-              src="https://www.youtube.com/embed/1czjJGA5dHQ"
-            ></iframe>
-            <iframe
-              // width="400"
-              height="250"
-              loading="lazy"
-              title="How to create a custom upload file input by Charles Kasasira"
-              className="outline outline-1 rounded hover:shadow-2xl -rotate-2"
-              src="https://www.youtube.com/embed/DAYoeJgolYg"
-            ></iframe>
-          </div>
-
-          <div className="flex flex-col md:flex-row md:justify-between gap-2 my-10">
-            <div>
-              <a href="https://blog.charleskasasira.me/css-art-instagram-logo-with-pure-css">
-                <div className="p-4 rounded cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 mb-5">
-                  <p className="text-sm font-light pl-2 border-l-4 mb-2">
-                    May 21, 2022
-                  </p>
-                  <h2 className="font-medium mb-2">
-                    CSS Art: Instagram Logo with pure CSS
-                  </h2>
-                  <p className="text-gray-600 text-sm dark:text-gray-400 mb-1 line-clamp-3">
-                    In this (mostly code, &quot;little plain text&quot;) post, I
-                    show you how I created an Instagram logo using CSS only
-                    (plus a little HTML). You can find the full source code
-                    here: CodePen
-                  </p>
-                  <span className="text-sm text-red-400">Read more</span>
-                </div>
-              </a>
-              <a href="https://blog.charleskasasira.me/cheat-sheet-arrays-in-javascript">
-                <div className="p-4 rounded cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 mb-5">
-                  <p className="text-sm font-light pl-2 border-l-4 mb-2">
-                    Jan 22, 2022
-                  </p>
-                  <h2 className="font-medium mb-2">
-                    Cheat sheet: Arrays in JavaScript
-                  </h2>
-                  <p className="text-gray-600 text-sm dark:text-gray-400 mb-1 line-clamp-3">
-                    JavaScript Arrays are a very flexible data structure and are
-                    used as lists, stacks, queues, etc. Every value in an array
-                    is associated with a numeric index starting with 0. Here is
-                    everything you need to get started with arrays
-                  </p>
-                  <span className="text-sm text-red-400">Read more</span>
-                </div>
-              </a>
-              <a href="https://blog.charleskasasira.me/how-to-click-outside-to-close-in-javascript">
-                <div className="p-4 rounded cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 mb-5">
-                  <p className="text-sm font-light pl-2 border-l-4 mb-2">
-                    January 18, 2022
-                  </p>
-                  <h2 className="font-medium mb-2">
-                    HOW TO: Click outside to close in Javascript
-                  </h2>
-                  <p className="text-gray-600 text-sm dark:text-gray-400 mb-1 line-clamp-3">
-                    Hey, Charles Kasasira here, time to time, I write 2-minutes
-                    packaged articles on how to do some cool stuff in web
-                    development, and in this short &quot;Do It Yourself&quot;, I
-                    would like to show you how you too can write a short piece
-                    of code using HTML, CSS and vanilla javascript to close a
-                    modal or any context by clicking outside, just like
-                    twitter&apos;s context menu.
-                  </p>
-                  <span className="text-sm text-red-400">Read more</span>
-                </div>
+    <Container
+      title="Charles Kasasira | Product Engineer and Creator"
+      description="Kampala-based software designer and developer building useful digital products and educational content."
+    >
+      <section className="mb-16">
+        <div className="grid items-center gap-8 md:grid-cols-[1.5fr,1fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="space-y-6"
+          >
+            <p className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-50 px-4 py-1 text-xs font-medium tracking-[0.12em] text-amber-900 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">
+              SOFTWARE DESIGNER + DEVELOPER
+            </p>
+            <h1 className="text-4xl font-black leading-tight text-zinc-900 dark:text-zinc-100 md:text-6xl">
+              Building practical products, teaching what I learn.
+            </h1>
+            <p className="max-w-2xl text-lg text-zinc-700 dark:text-zinc-300">
+              I am Charles Kasasira, a Kampala-based engineer focused on
+              frontend architecture, product design systems, and developer
+              education through project-based tutorials.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/projects"
+                className="rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-black dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+              >
+                Explore Projects
+              </Link>
+              <a
+                href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw?sub_confirmation=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-200 dark:hover:text-zinc-100"
+              >
+                Subscribe on YouTube
               </a>
             </div>
-            <div className="flex flex-col gap-5">
-              <div className="w-72 outline outline-1 rounded py-2 px-5">
-                <h2 className="flex gap-2 items-center font-medium mb-2">
-                  Subscribe to my youtube channel
-                </h2>
-                <hr className="mb-2" />
-                <p>
-                  I have uploaded over 75+ tutorials and planning to add more.
-                </p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {socialLinks.map((link) => (
                 <a
-                  href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw?sub_confirmation=1"
+                  key={link.name}
+                  href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex justify-center items-center mt-2"
+                  className="rounded-full border border-zinc-300 p-2 text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-200 dark:hover:text-zinc-100"
+                  aria-label={link.name}
                 >
-                  <span className="transition ease-in-out delay-150 bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-5 w-full flex justify-center items-center hover:shadow-lg hover:-translate-y-1">
-                    Subscribe
-                  </span>
+                  {link.icon}
                 </a>
-              </div>
-              <div className="w-72 outline outline-1 rounded py-2 px-5">
-                <h3 className="flex gap-2 items-center font-medium mb-2">
-                  {" "}
-                  <MdOutlineWorkOutline /> Work
-                </h3>
-                <hr className="mb-2" />
-
-                <div className="flex gap-2 w-full my-2 mb-5">
-                  <div className="bg-gray-200 rounded-full w-10 h-10 outline outline-1 flex justify-center items-center overflow-hidden">
-                    <Image
-                      src="/renu.jpg"
-                      alt="RENU"
-                      width={35}
-                      height={35}
-                      placeholder="blur"
-                      blurDataURL="/renu.png"
-                    />
-                  </div>
-                  <div className="flex justify-between flex-grow">
-                    <div className="flex flex-col">
-                      <p>RENU</p>
-                      <p className="text-xs font-light">Intern</p>
-                    </div>
-
-                    <p className="text-sm font-light">Aug 2023</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2 w-full my-2 mb-5">
-                  <div className="bg-gray-200 rounded-full w-10 h-10 outline outline-1 flex justify-center items-center overflow-hidden">
-                    <Image
-                      src="/ablestate.png"
-                      alt="ablestate"
-                      width={35}
-                      height={35}
-                      placeholder="blur"
-                      blurDataURL="/ablestate.png"
-                    />
-                  </div>
-                  <div className="flex justify-between flex-grow">
-                    <div className="flex flex-col">
-                      <p>Ablestate</p>
-                      <p className="text-xs font-light">Front-End</p>
-                    </div>
-
-                    <p className="text-sm font-light">May 2023</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2 w-full my-2 mb-5">
-                  <div className="bg-gray-200 rounded-full w-10 h-10 outline outline-1 flex justify-center items-center overflow-hidden">
-                    <Image
-                      src="/whd-logo.png"
-                      alt="ablestate"
-                      width={35}
-                      height={35}
-                      placeholder="blur"
-                      blurDataURL="/whd-logo.png"
-                    />
-                  </div>
-                  <div className="flex justify-between flex-grow">
-                    <div className="flex flex-col">
-                      <p>WHD</p>
-                      <p className="text-xs font-light">Graphics Designer</p>
-                    </div>
-
-                    <p className="text-sm font-light">Sept 2020</p>
-                  </div>
-                </div>
-                <div className="flex gap-2 w-full my-2">
-                  <div className="bg-gray-200 rounded-full w-10 h-10 outline outline-1 flex justify-center items-center overflow-hidden">
-                    <Image
-                      src="/byte_of_hope.jpg"
-                      alt="ablestate"
-                      width={35}
-                      height={35}
-                      placeholder="blur"
-                      blurDataURL="/byte_of_hope.jpg"
-                    />
-                  </div>
-                  <div className="flex justify-between flex-grow">
-                    <div className="flex flex-col">
-                      <p>Byte Of Hope</p>
-                      <p className="text-xs font-light">Founding member</p>
-                    </div>
-
-                    <p className="text-sm font-light">June 2019</p>
-                  </div>
-                </div>
-                <button className="transition ease-in-out delay-150 bg-black text-white dark:bg-white dark:text-black rounded-lg py-1 px-5 w-full mt-2 hover:shadow-lg hover:-translate-y-1">
-                  Download CV
-                </button>
-              </div>
+              ))}
             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative mx-auto w-full max-w-sm"
+          >
+            <div className="absolute -inset-2 -z-10 rounded-[2rem] bg-gradient-to-br from-amber-300/40 via-orange-300/30 to-emerald-300/40 blur-2xl dark:from-amber-500/20 dark:via-orange-500/20 dark:to-emerald-500/20" />
+            <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-100 p-8 dark:border-zinc-800 dark:bg-zinc-900">
+              <Image
+                src="/pole.png"
+                alt="Charles Kasasira portrait"
+                width={220}
+                height={220}
+                className="mx-auto rounded-2xl"
+                priority
+              />
+              <p className="mt-5 text-center text-sm font-medium tracking-[0.08em] text-zinc-600 dark:text-zinc-300">
+                OPEN TO COLLABORATION
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          What I Focus On
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {focusAreas.map((item) => (
+            <article
+              key={item.title}
+              className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/60"
+            >
+              <h3 className="mb-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                {item.title}
+              </h3>
+              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                {item.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          Featured
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {featuredWork.map((item) => (
+            <article
+              key={item.name}
+              className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60"
+            >
+              <h3 className="mb-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                {item.name}
+              </h3>
+              <p className="mb-4 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                {item.description}
+              </p>
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-semibold text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+                >
+                  {item.cta}
+                </a>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="text-sm font-semibold text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+                >
+                  {item.cta}
+                </Link>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-8 grid gap-8 md:grid-cols-2">
+        <div>
+          <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            Recent Writing
+          </h2>
+          <div className="space-y-3">
+            {recentPosts.map((post) => (
+              <a
+                key={post.href}
+                href={post.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-2xl border border-zinc-200 bg-zinc-50 p-4 transition hover:-translate-y-0.5 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+              >
+                <p className="mb-2 text-xs uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
+                  {post.date}
+                </p>
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                  {post.title}
+                </h3>
+              </a>
+            ))}
           </div>
         </div>
-      </Container>
-    </Suspense>
+        <div>
+          <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            Latest Tutorials
+          </h2>
+          <div className="space-y-3">
+            {videoIds.map((videoId) => (
+              <div
+                key={videoId}
+                className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-2 dark:border-zinc-800 dark:bg-zinc-900/60"
+              >
+                <iframe
+                  className="aspect-video w-full rounded-xl"
+                  loading="lazy"
+                  title={`YouTube video ${videoId}`}
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Container>
   );
 }

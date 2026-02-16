@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.charleskasasira.me/api/my-sitemap 
-Sitemap: https://charleskasasira.me/api/sitemap.xml 
+Sitemap: https://www.charleskasasira.com/api/my-sitemap
+Sitemap: https://www.charleskasasira.com/sitemap.xml
