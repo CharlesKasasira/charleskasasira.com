@@ -102,14 +102,14 @@ export default function Home() {
       description="Kampala-based software designer and developer building useful digital products and educational content."
     >
       <section className="mb-16">
-        <div className="grid items-center gap-8 md:grid-cols-[1.5fr,1fr]">
+        <div className="grid grid-cols-1 items-start gap-8 sm:grid-cols-[1fr,auto] sm:gap-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="space-y-6"
+            className="min-w-0 space-y-6 sm:col-start-1"
           >
-            <p className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-50 px-4 py-1 text-xs font-medium tracking-[0.12em] text-amber-900 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200">
+            <p className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-50 px-4 py-1 text-xs font-medium tracking-[0.12em] text-amber-900 dark:border-amber-400/40 dark:bg-amber-500/20 dark:text-amber-100">
               SOFTWARE DESIGNER + DEVELOPER
             </p>
             <h1 className="text-4xl font-black leading-tight text-zinc-900 dark:text-zinc-100 md:text-6xl">
@@ -123,7 +123,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/projects"
-                className="rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-black dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+                className="primary-cta-text rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100"
               >
                 Explore Projects
               </Link>
@@ -131,7 +131,7 @@ export default function Home() {
                 href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw?sub_confirmation=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border border-zinc-300 px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-200 dark:hover:text-zinc-100"
+                className="rounded-full border-2 border-zinc-300 bg-transparent px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-500 dark:bg-transparent dark:text-zinc-200 dark:hover:border-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
               >
                 Subscribe on YouTube
               </a>
@@ -156,22 +156,16 @@ export default function Home() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative mx-auto w-full max-w-sm"
+            className="flex shrink-0 justify-center sm:col-start-2 sm:justify-end"
           >
-            <div className="absolute -inset-2 -z-10 rounded-[2rem] bg-gradient-to-br from-amber-300/40 via-orange-300/30 to-emerald-300/40 blur-2xl dark:from-amber-500/20 dark:via-orange-500/20 dark:to-emerald-500/20" />
-            <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-zinc-100 p-8 dark:border-zinc-800 dark:bg-zinc-900">
-              <Image
-                src="/pole.png"
-                alt="Charles Kasasira portrait"
-                width={220}
-                height={220}
-                className="mx-auto rounded-2xl"
-                priority
-              />
-              <p className="mt-5 text-center text-sm font-medium tracking-[0.08em] text-zinc-600 dark:text-zinc-300">
-                OPEN TO COLLABORATION
-              </p>
-            </div>
+            <Image
+              src="/pole.png"
+              alt="Charles Kasasira portrait"
+              width={180}
+              height={180}
+              className="h-[180px] w-[180px] shrink-0 rounded-full object-cover"
+              priority
+            />
           </motion.div>
         </div>
       </section>

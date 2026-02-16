@@ -19,7 +19,7 @@ function NavItem({
   const baseClasses =
     "rounded-full px-4 py-2 text-sm transition duration-200 hover:-translate-y-0.5";
   const activeClasses = isActive
-    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+    ? "primary-cta-text bg-zinc-900 dark:bg-zinc-100"
     : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800";
 
   if (external) {
@@ -49,18 +49,12 @@ function Nav() {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-zinc-200/80 bg-white/90 py-5 backdrop-blur dark:border-zinc-800 dark:bg-[#151515]/90">
+    <nav className="sticky top-0 z-50 flex items-center justify-between border-b border-zinc-200 bg-white py-5 dark:border-zinc-800 dark:bg-zinc-950">
       <a href="#skip" className="skip-nav">
         Skip to content
       </a>
 
       <div className="flex items-center gap-3">
-        <Link
-          href="/"
-          className="rounded-full border border-zinc-300 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-zinc-700 dark:border-zinc-700 dark:text-zinc-300"
-        >
-          CHARLES
-        </Link>
         <MobileMenu />
         <ul className="flex items-center gap-2">
           {menuData.map((menu) => (
