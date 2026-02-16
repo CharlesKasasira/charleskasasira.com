@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: 'IBM Plex Sans';
@@ -19,38 +25,50 @@
 }
 
 :root {
-  /* Your default theme */
-  --background: #f6f7f8;
-  --foreground: #1a1a1a;
+  --background: #f5f5f4;
+  --foreground: #18181b;
+  --primary-cta-text: #fff;
 }
 
-[data-theme='dark'] {
-  --background: #000000;
-  --foreground: white;
+.dark {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --primary-cta-text: #18181b;
 }
 
 ::selection {
-  background-color: #1a1a1a;
-  color: #fefefe;
+  background-color: #f59e0b;
+  color: #18181b;
+}
+
+html {
+  background-color: var(--background);
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: 'IBM Plex Sans' sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   scroll-behavior: smooth;
-  background: var(--background);
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      rgba(249, 115, 22, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.08), transparent 25%);
+  min-height: 100vh;
 }
 
 #__next {
-  @apply bg-[#f6f7f8] dark:bg-gray-900;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 .skip-nav {
-  @apply absolute px-4 py-3 transition-transform duration-200 transform -translate-y-12 -left-1/4 focus:top-4 focus:translate-y-3 -top-8;
+  @apply absolute -left-1/4 -top-8 -translate-y-12 transform rounded-md bg-zinc-900 px-4 py-3 text-white transition-transform duration-200 focus:top-4 focus:translate-y-3 dark:bg-zinc-100 dark:text-zinc-900;
 }
 
 #skip {
@@ -66,3 +84,6 @@ a {
   box-sizing: border-box;
 }
 
+.primary-cta-text {
+  color: var(--primary-cta-text) !important;
+}

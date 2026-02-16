@@ -1,6 +1,6 @@
-# <a href="https://www.charleskasasira.me">charleskasasira.me</a> 
+# <a href="https://www.charleskasasira.com">charleskasasira.com</a> 
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=My%20portfolio%20built%20with%20Next.js%2013%2C%20Tailwindcss%2C%20and%20Typescript.%20&url=https://github.com/CharlesKasasira/charleskasasira.me&via=kasasiraC&hashtags=opensource)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=My%20portfolio%20built%20with%20Next.js%2013%2C%20Tailwindcss%2C%20and%20Typescript.%20&url=https://github.com/CharlesKasasira/charleskasasira.com&via=kasasiraC&hashtags=opensource)
 
 
 ## Technology stack
@@ -15,13 +15,13 @@
 1. Clone this repo:
 
 ```sh
-$ git clone https://github.com/CharlesKasasira/charleskasasira.me.git
+$ git clone https://github.com/CharlesKasasira/charleskasasira.com.git
 ```
 
 2. Then go to the project's folder:
 
 ```sh
-cd charleskasasira.me
+cd charleskasasira.com
 ```
 
 3. Install all dependencies:

@@ -1,8 +1,9 @@
 import cn from 'classnames';
 import Link from 'next/link';
-import useDelayedRender from 'use-delayed-render';
-import { useState, useEffect } from 'react';
+import useDelayedRender from 'utils/useDelayedRender';
+import { useState, useEffect, type SVGProps } from 'react';
 import styles from 'styles/mobile-menu.module.css';
+import { menuData } from 'utils/menuData';
 
 export default function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +23,11 @@ export default function MobileMenu() {
       setIsMenuOpen(true);
       document.body.style.overflow = 'hidden';
     }
+  }
+
+  function closeMenu() {
+    setIsMenuOpen(false);
+    document.body.style.overflow = '';
   }
 
   useEffect(() => {
@@ -49,53 +55,35 @@ export default function MobileMenu() {
             isMenuRendered && styles.menuRendered
           )}
         >
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: '150ms' }}
-          >
-            <Link href="/">
-              <span className="flex w-auto pb-4">Home</span>
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: '175ms' }}
-          >
-            <Link href="/about">
-              <span className="flex w-auto pb-4">About</span>
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: '200ms' }}
-          >
-            <Link href="/articles">
-              <span className="flex w-auto pb-4">Article</span>
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: '250ms' }}
-          >
-            <Link href="/projects">
-              <span className="flex w-auto pb-4">Projects</span>
-            </Link>
-          </li>
-          <li
-            className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-            style={{ transitionDelay: '275ms' }}
-          >
-            <Link href="/youtube">
-              <span className="flex w-auto pb-4">Youtube</span>
-            </Link>
-          </li>
+          {menuData.map((item, index) => (
+            <li
+              key={item.text}
+              className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
+              style={{ transitionDelay: `${150 + index * 25}ms` }}
+            >
+              {item.external ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={closeMenu}
+                >
+                  <span className="flex w-auto pb-4">{item.text}</span>
+                </a>
+              ) : (
+                <Link href={item.href} onClick={closeMenu}>
+                  <span className="flex w-auto pb-4">{item.text}</span>
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       )}
     </>
   );
 }
 
-function MenuIcon(props: JSX.IntrinsicElements['svg']) {
+function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
@@ -123,7 +111,7 @@ function MenuIcon(props: JSX.IntrinsicElements['svg']) {
   );
 }
 
-function CrossIcon(props: JSX.IntrinsicElements['svg']) {
+function CrossIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"

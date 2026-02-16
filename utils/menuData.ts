@@ -1,4 +1,10 @@
-export const menuData = [
+export type MenuItem = {
+  text: string;
+  href: string;
+  external?: boolean;
+};
+
+export const menuData: MenuItem[] = [
   {
     text: "Home",
     href: "/",
@@ -8,15 +14,16 @@ export const menuData = [
     href: "/about",
   },
   {
-    text: "blog",
-    href: "https://blog.charleskasasira.me",
-  },
-  {
     text: "Projects",
     href: "/projects",
   },
   {
-    text: "Youtube",
+    text: "YouTube",
     href: "/youtube",
+  },
+  {
+    text: "Blog",
+    href: "https://blog.charleskasasira.com",
+    external: true,
   },
 ];

@@ -1,27 +1,29 @@
 function generateSiteMap() {
+  const lastUpdated = new Date().toISOString().split("T")[0];
+
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-       <loc>https://charleskasasira.me</loc>
-       <lastmod>2022-11-17</lastmod>
+       <loc>https://charleskasasira.com</loc>
+       <lastmod>${lastUpdated}</lastmod>
        <changefreq>always</changefreq>
        <priority>0.8</priority>
      </url>
      <url>
-       <loc>https://charleskasasira.me/projects</loc>
-       <lastmod>2022-11-17</lastmod>
+       <loc>https://charleskasasira.com/projects</loc>
+       <lastmod>${lastUpdated}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.3</priority>
      </url>
      <url>
-       <loc>https://charleskasasira.me/articles</loc>
-       <lastmod>2022-11-17</lastmod>
+       <loc>https://charleskasasira.com/articles</loc>
+       <lastmod>${lastUpdated}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.3</priority>
      </url>
      <url>
-       <loc>https://charleskasasira.me/youtube</loc>
-       <lastmod>2022-11-17</lastmod>
+       <loc>https://charleskasasira.com/youtube</loc>
+       <lastmod>${lastUpdated}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.3</priority>
      </url>
