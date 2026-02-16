@@ -69,7 +69,7 @@ const featuredWork = [
     name: "Technical Writing",
     description:
       "Hands-on frontend engineering breakdowns and implementation guides published on my blog.",
-    href: "https://blog.charleskasasira.me",
+    href: "https://blog.charleskasasira.com",
     cta: "Read articles",
     external: true,
   },
@@ -79,17 +79,17 @@ const recentPosts = [
   {
     title: "CSS Art: Instagram Logo with pure CSS",
     date: "May 21, 2022",
-    href: "https://blog.charleskasasira.me/css-art-instagram-logo-with-pure-css",
+    href: "https://blog.charleskasasira.com/css-art-instagram-logo-with-pure-css",
   },
   {
     title: "Cheat sheet: Arrays in JavaScript",
     date: "Jan 22, 2022",
-    href: "https://blog.charleskasasira.me/cheat-sheet-arrays-in-javascript",
+    href: "https://blog.charleskasasira.com/cheat-sheet-arrays-in-javascript",
   },
   {
     title: "HOW TO: Click outside to close in Javascript",
     date: "Jan 18, 2022",
-    href: "https://blog.charleskasasira.me/how-to-click-outside-to-close-in-javascript",
+    href: "https://blog.charleskasasira.com/how-to-click-outside-to-close-in-javascript",
   },
 ];
 

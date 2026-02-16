@@ -23,7 +23,7 @@ export const menuData: MenuItem[] = [
   },
   {
     text: "Blog",
-    href: "https://blog.charleskasasira.me",
+    href: "https://blog.charleskasasira.com",
     external: true,
   },
 ];

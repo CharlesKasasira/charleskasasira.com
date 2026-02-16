@@ -57,7 +57,7 @@ export default function Footer() {
               Snippets
             </span>
           </Link>
-          <ExternalLink href="https://blog.charleskasasira.me">Blog</ExternalLink>
+          <ExternalLink href="https://blog.charleskasasira.com">Blog</ExternalLink>
         </div>
       </div>
       <div className="flex w-full justify-center">
