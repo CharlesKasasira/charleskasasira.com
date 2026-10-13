@@ -95,6 +95,7 @@ export default function YouTubePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center justify-center rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-950"
+              style={{ color: "#fff" }}
             >
               Subscribe on YouTube
             </a>
