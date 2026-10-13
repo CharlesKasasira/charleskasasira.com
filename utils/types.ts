@@ -8,7 +8,12 @@ export type Views = {
 };
 
 export type YouTube = {
-  subscriberCount: number;
-  viewCount: number;
-  videoCount: number
+  subscriberCount: string;
+  viewCount: string;
+  videoCount: string;
+  latestVideo: {
+    videoId: string;
+    title: string;
+    publishedAt: string;
+  } | null;
 };

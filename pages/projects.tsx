@@ -1,37 +1,14 @@
 import Container from "components/Container";
 import GithubGraph from "components/GithubGraph";
 import Image from "next/image";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import useSWR from "swr";
 import { AiFillStar } from "react-icons/ai";
 import { FiExternalLink, FiGitBranch } from "react-icons/fi";
 import { RiGitRepositoryLine, RiUserFollowLine, RiUserSharedLine } from "react-icons/ri";
 import { BiCodeBlock } from "react-icons/bi";
 import fetcher from "utils/fetcher";
-
-type RepoSummary = {
-  name: string;
-  html_url: string;
-  description: string | null;
-  stars: number;
-  forks: number;
-  language: string | null;
-  pushed_at: string;
-  updated_at: string;
-};
-
-type GithubSummary = {
-  username: string;
-  name: string;
-  avatar: string;
-  profile_url: string;
-  followers: number;
-  following: number;
-  stars: number;
-  public_repos: number;
-  public_gists: number;
-  featured_kind: "biggest" | "latest";
-  featured_project: RepoSummary | null;
-};
+import type { GithubSummary } from "utils/github";
 
 const DEFAULT_USERNAME = "charleskasasira";
 
@@ -45,8 +22,25 @@ function formatDate(value?: string) {
   }).format(new Date(value));
 }
 
-export default function Projects() {
+type ProjectsProps = {
+  initialSummary: GithubSummary;
+};
+
+export const getStaticProps: GetStaticProps<ProjectsProps> = async () => {
+  const { getGithubSummary } = await import("utils/github");
+  const initialSummary = await getGithubSummary();
+
+  return {
+    props: { initialSummary },
+    revalidate: 10 * 60,
+  };
+};
+
+export default function Projects({
+  initialSummary,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { data, isLoading } = useSWR<GithubSummary>("/api/github", fetcher, {
+    fallbackData: initialSummary,
     revalidateOnFocus: false,
     dedupingInterval: 5 * 60 * 1000,
   });
@@ -137,9 +131,17 @@ export default function Projects() {
         <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
           Stats
         </h2>
-        {!data ? (
-          <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-200">
-            GitHub data is temporarily unavailable. Please try again in a moment.
+        {isLoading && !data ? (
+          <div
+            className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
+            aria-label="Loading GitHub statistics"
+          >
+            {stats.map((stat) => (
+              <div
+                key={stat.id}
+                className="h-24 animate-pulse rounded-2xl bg-zinc-100 dark:bg-zinc-900"
+              />
+            ))}
           </div>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -163,6 +165,11 @@ export default function Projects() {
             ))}
           </div>
         )}
+        {data?.source === "fallback" ? (
+          <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
+            Showing a recent snapshot while GitHub refreshes.
+          </p>
+        ) : null}
       </section>
 
       <section className="mb-10 w-full">
@@ -170,13 +177,13 @@ export default function Projects() {
           Commit graph
         </h2>
         <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-          This chart is loaded directly from GitHub, so it matches the graph on
-          my profile.
+          A live view of recent GitHub contribution activity, with a direct
+          profile link if GitHub cannot provide the graph.
         </p>
         <GithubGraph username={username} />
       </section>
 
-      <section className="mb-16 w-full">
+      <section className="mb-4 w-full">
         <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
           {featuredLabel}
         </h2>
