@@ -88,7 +88,7 @@ export default function About() {
             {timeline.map((item) => (
               <article
                 key={item.org}
-                className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-900/60"
+                className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-5 py-4 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10"
               >
                 <div>
                   <p className="font-semibold">{item.org}</p>
