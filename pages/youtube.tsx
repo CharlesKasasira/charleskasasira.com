@@ -35,15 +35,21 @@ function StatCard({
   isLoading: boolean;
 }) {
   return (
-    <article className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
+    <article className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-red-400 hover:bg-red-50 hover:shadow-lg hover:shadow-red-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-red-500 dark:hover:bg-red-500/10">
       {isLoading ? (
         <div className="h-9 w-28 animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />
       ) : (
-        <p className="text-3xl font-black text-zinc-900 dark:text-zinc-100">
+        <p className="origin-left text-3xl font-black text-zinc-900 transition duration-200 motion-safe:group-hover:scale-105 group-hover:text-red-600 dark:text-zinc-100 dark:group-hover:text-red-400">
           {value === null ? "—" : currencyFormatter(value)}
         </p>
       )}
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{label}</p>
+      <p className="mt-2 text-sm text-zinc-600 transition-colors duration-200 group-hover:text-red-700 dark:text-zinc-400 dark:group-hover:text-red-300">
+        {label}
+      </p>
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-red-600 transition-transform duration-200 group-hover:scale-x-100 motion-reduce:transition-none"
+      />
     </article>
   );
 }
