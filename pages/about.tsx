@@ -1,5 +1,6 @@
 import Container from "components/Container";
 import Link from "next/link";
+import { FiAward } from "react-icons/fi";
 
 const skills = [
   "Frontend Engineering",
@@ -39,12 +40,15 @@ const timeline = [
 ];
 
 const certifications = [
-  "Machine Learning with Python - FreeCodeCamp",
-  "Introduction to Generative AI - Google Cloud Skill Boost",
-  "Introduction to Machine Learning - Kaggle",
-  "Front-End Development Libraries - FreeCodeCamp",
-  "Full-Stack Web Development - Ablestate",
-  "Mobile App Development with Flutter - GDSC MUK",
+  { title: "Machine Learning with Python", issuer: "freeCodeCamp" },
+  {
+    title: "Introduction to Generative AI",
+    issuer: "Google Cloud Skill Boost",
+  },
+  { title: "Introduction to Machine Learning", issuer: "Kaggle" },
+  { title: "Front-End Development Libraries", issuer: "freeCodeCamp" },
+  { title: "Full-Stack Web Development", issuer: "Ablestate" },
+  { title: "Mobile App Development with Flutter", issuer: "GDSC MUK" },
 ];
 
 export default function About() {
@@ -106,10 +110,29 @@ export default function About() {
 
         <section>
           <h2 className="mb-4 text-2xl font-bold">Certifications</h2>
-          <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
+          <ul className="grid gap-3 text-zinc-700 md:grid-cols-2 dark:text-zinc-300">
             {certifications.map((cert) => (
-              <li key={cert} className="rounded-xl bg-zinc-100 px-4 py-2 dark:bg-zinc-900/70">
-                {cert}
+              <li
+                key={cert.title}
+                className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-amber-400 hover:bg-amber-50 hover:shadow-lg hover:shadow-amber-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-amber-500 dark:hover:bg-amber-500/10"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-xl text-amber-700 transition duration-200 motion-safe:group-hover:rotate-6 motion-safe:group-hover:scale-110 dark:bg-amber-500/15 dark:text-amber-300">
+                    <FiAward aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="font-semibold leading-6 text-zinc-900 dark:text-zinc-100">
+                      {cert.title}
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                      {cert.issuer}
+                    </p>
+                  </div>
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-amber-500 transition-transform duration-200 group-hover:scale-x-100"
+                />
               </li>
             ))}
           </ul>
