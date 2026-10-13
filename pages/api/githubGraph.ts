@@ -60,7 +60,10 @@ async function fetchContributionsFromApi(username: string): Promise<string | nul
   try {
     const res = await fetch(
       `https://github-contributions.vercel.app/api/v1/${encodeURIComponent(username)}`,
-      { headers: { Accept: "application/json" } }
+      {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(5000),
+      }
     );
     if (!res.ok) return null;
     const data = (await res.json()) as { contributions?: ContributionDay[] };
@@ -94,12 +97,38 @@ async function fetchSvg(url: string): Promise<string | null> {
       "User-Agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     },
+    signal: AbortSignal.timeout(5000),
   });
 
   if (!response.ok) return null;
 
   const payload = await response.text();
   return extractSvgFromContributionPage(payload);
+}
+
+function firstAvailableSvg(
+  candidates: Array<Promise<string | null>>
+): Promise<string | null> {
+  return new Promise((resolve) => {
+    let pending = candidates.length;
+    let settled = false;
+
+    const finish = (svg: string | null) => {
+      if (settled) return;
+      if (svg) {
+        settled = true;
+        resolve(svg);
+        return;
+      }
+
+      pending -= 1;
+      if (pending === 0) resolve(null);
+    };
+
+    candidates.forEach((candidate) => {
+      candidate.then(finish).catch(() => finish(null));
+    });
+  });
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -119,13 +148,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const contributionUrl = `https://github.com/users/${username}/contributions`;
     const profileUrl = `https://github.com/${username}`;
 
-    const svgFromContributions = await fetchSvg(contributionUrl);
-    const svgFromProfile = svgFromContributions ? null : await fetchSvg(profileUrl);
-    let resolvedSvg = svgFromContributions || svgFromProfile;
-
-    if (!resolvedSvg) {
-      resolvedSvg = await fetchContributionsFromApi(username);
-    }
+    const resolvedSvg = await firstAvailableSvg([
+      fetchSvg(contributionUrl),
+      fetchSvg(profileUrl),
+      fetchContributionsFromApi(username),
+    ]);
 
     if (resolvedSvg) {
       cache.set(username, { svg: resolvedSvg, expiresAt: now + CACHE_TTL_MS });

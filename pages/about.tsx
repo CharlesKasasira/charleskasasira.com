@@ -53,7 +53,7 @@ export default function About() {
       title="About | Charles Kasasira"
       description="Background, skills, and experience for Charles Kasasira."
     >
-      <div className="mb-16 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
+      <div className="mb-4 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
         <section className="space-y-5">
           <p className="inline-flex rounded-full border border-emerald-500/30 bg-emerald-50 px-4 py-1 text-xs font-semibold tracking-[0.12em] text-emerald-900 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">
             ABOUT

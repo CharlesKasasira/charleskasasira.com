@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const ExternalLink = ({ href, children }) => (
   <a
@@ -13,7 +13,7 @@ const ExternalLink = ({ href, children }) => (
 
 export default function Footer() {
   return (
-    <footer className="mb-8 mt-20 flex flex-col items-start justify-center">
+    <footer className="mb-6 mt-12 flex flex-col items-start justify-center">
       <hr className="mb-8 w-full border-1 border-zinc-200 dark:border-zinc-800" />
       <div className="grid w-full grid-cols-1 gap-8 pb-10 sm:grid-cols-3">
         <div className="flex flex-col space-y-3">
@@ -52,11 +52,9 @@ export default function Footer() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
             More
           </p>
-          <Link href="/projects">
-            <span className="text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
-              Snippets
-            </span>
-          </Link>
+          <ExternalLink href="https://gist.github.com/CharlesKasasira">
+            Snippets
+          </ExternalLink>
           <ExternalLink href="https://blog.charleskasasira.com">Blog</ExternalLink>
         </div>
       </div>
