@@ -74,7 +74,7 @@ export default function About() {
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="rounded-full border border-zinc-300 bg-zinc-100 px-4 py-1 text-sm text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                className="cursor-default select-none rounded-full border border-zinc-300 bg-zinc-100 px-4 py-1 text-sm text-zinc-700 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-900 hover:shadow-md hover:shadow-emerald-500/10 active:scale-95 active:shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10 dark:hover:text-emerald-200"
               >
                 {skill}
               </span>
