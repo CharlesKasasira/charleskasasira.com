@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Container from "components/Container";
 
 export default function Articles() {
@@ -11,7 +10,6 @@ export default function Articles() {
         <h2 className="tracking-tight my-4 text-gray-700 dark:text-white">
           Adding them Soon
         </h2>
-        
       </div>
     </Container>
   );

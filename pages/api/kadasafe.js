@@ -1,12 +1,14 @@
-// import { Server } from 'Socket.IO'
-const app = require("express")();
-const http = require("http").createServer(app);
-const PORT = process.env.PORT || 8080;
+import express from "express";
+import { createServer } from "node:http";
+import { Server } from "socket.io";
+
+const app = express();
+const http = createServer(app);
 
 export default function handler(req, res) {
   // res.status(200).json({ name: "John Doe" });
 
-  const socketio = require("socket.io")(http);
+  const socketio = new Server(http);
   console.log("hello");
 
   socketio.use((socket, next) => {
@@ -27,7 +29,7 @@ export default function handler(req, res) {
 
     const users = [];
 
-    for (let [id, user_id] of socketio.of("/").sockets) {
+    for (const [, user_id] of socketio.of("/").sockets) {
       users.push(user_id.user_id);
     }
 
@@ -52,7 +54,7 @@ export default function handler(req, res) {
     userSocket.on("logout", (data) => {
       const index = users.indexOf(data);
       if (index > -1) users.splice(index, 1);
-      io.of("/").in(data).local.disconnectSockets();
+      socketio.of("/").in(data).local.disconnectSockets();
       userSocket.broadcast.emit("user_disconnected", users);
       console.log(`${data} is now offline`);
       console.log("current online users: ", users);

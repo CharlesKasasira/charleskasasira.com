@@ -19,10 +19,7 @@ export type GithubSummary = {
   stars: number;
   public_repos: number;
   public_gists: number;
-  featured_kind: "biggest" | "latest";
-  featured_project: RepoSummary | null;
-  latest_project: RepoSummary | null;
-  biggest_project: RepoSummary | null;
+  flagship_projects: RepoSummary[];
   source: "live" | "cache" | "fallback";
 };
 
@@ -53,60 +50,131 @@ type GithubRepo = {
 const USERNAME = "CharlesKasasira";
 const CACHE_TTL_MS = 10 * 60 * 1000;
 
-const FALLBACK_SUMMARY: GithubSummary = {
-  username: USERNAME,
-  name: "Charles Kasasira",
-  avatar: "https://avatars.githubusercontent.com/u/59878203?v=4",
-  profile_url: `https://github.com/${USERNAME}`,
-  followers: 89,
-  following: 22,
-  stars: 35,
-  public_repos: 127,
-  public_gists: 29,
-  featured_kind: "biggest",
-  featured_project: {
-    name: "Toll-Pay",
-    html_url: `https://github.com/${USERNAME}/Toll-Pay`,
-    description: "A toll payment mobile application for Android and iOS.",
-    stars: 15,
-    forks: 9,
-    language: "Dart",
-    pushed_at: "2022-10-28T07:21:55Z",
-    updated_at: "2025-02-26T07:05:40Z",
+const FLAGSHIP_PROJECTS = [
+  {
+    name: "iHatePDF",
+    description:
+      "A self-hosted PDF platform with web, API, worker, and desktop surfaces.",
   },
-  latest_project: {
+  {
+    name: "git-quest",
+    description:
+      "An interactive game for learning Git through challenges, visualizations, and a simulated terminal.",
+  },
+  {
+    name: "charleskasasira.com",
+    description:
+      "This portfolio, built to connect selected projects, technical writing, and video work.",
+  },
+  {
+    name: "manuals",
+    description:
+      "A manuals governance platform for drafting, review, publishing, search, and organizational knowledge.",
+  },
+  {
+    name: "Uganda-data",
+    description:
+      "A growing collection of structured Ugandan public data for practical software and analysis projects.",
+  },
+  {
+    name: "LoopList",
+    description:
+      "A Laravel application for turning recurring responsibilities into clear, trackable loops.",
+  },
+] as const;
+
+const FLAGSHIP_FALLBACKS: Record<string, RepoSummary> = {
+  iHatePDF: {
+    name: "iHatePDF",
+    html_url: `https://github.com/${USERNAME}/iHatePDF`,
+    description: FLAGSHIP_PROJECTS[0].description,
+    stars: 0,
+    forks: 1,
+    language: "JavaScript",
+    pushed_at: "2026-05-24T21:35:36Z",
+    updated_at: "2026-05-24T21:35:41Z",
+  },
+  "git-quest": {
+    name: "git-quest",
+    html_url: `https://github.com/${USERNAME}/git-quest`,
+    description: FLAGSHIP_PROJECTS[1].description,
+    stars: 3,
+    forks: 0,
+    language: "TypeScript",
+    pushed_at: "2026-05-15T07:14:26Z",
+    updated_at: "2026-05-15T07:14:30Z",
+  },
+  "charleskasasira.com": {
+    name: "charleskasasira.com",
+    html_url: `https://github.com/${USERNAME}/charleskasasira.com`,
+    description: FLAGSHIP_PROJECTS[2].description,
+    stars: 2,
+    forks: 0,
+    language: "TypeScript",
+    pushed_at: "2026-10-13T15:34:24Z",
+    updated_at: "2026-10-13T15:34:29Z",
+  },
+  manuals: {
+    name: "manuals",
+    html_url: `https://github.com/${USERNAME}/manuals`,
+    description: FLAGSHIP_PROJECTS[3].description,
+    stars: 0,
+    forks: 0,
+    language: "TypeScript",
+    pushed_at: "2026-05-30T13:28:14Z",
+    updated_at: "2026-05-30T13:28:17Z",
+  },
+  "Uganda-data": {
+    name: "Uganda-data",
+    html_url: `https://github.com/${USERNAME}/Uganda-data`,
+    description: FLAGSHIP_PROJECTS[4].description,
+    stars: 0,
+    forks: 0,
+    language: "Data",
+    pushed_at: "2026-03-29T22:37:43Z",
+    updated_at: "2026-03-29T22:37:48Z",
+  },
+  LoopList: {
     name: "LoopList",
     html_url: `https://github.com/${USERNAME}/LoopList`,
-    description: null,
+    description: FLAGSHIP_PROJECTS[5].description,
     stars: 0,
     forks: 0,
     language: "PHP",
     pushed_at: "2026-05-31T22:29:18Z",
     updated_at: "2026-05-31T22:29:22Z",
   },
-  biggest_project: {
-    name: "Toll-Pay",
-    html_url: `https://github.com/${USERNAME}/Toll-Pay`,
-    description: "A toll payment mobile application for Android and iOS.",
-    stars: 15,
-    forks: 9,
-    language: "Dart",
-    pushed_at: "2022-10-28T07:21:55Z",
-    updated_at: "2025-02-26T07:05:40Z",
-  },
+};
+
+const FALLBACK_SUMMARY: GithubSummary = {
+  username: USERNAME,
+  name: "Charles Kasasira",
+  avatar: "https://avatars.githubusercontent.com/u/59878203?v=4",
+  profile_url: `https://github.com/${USERNAME}`,
+  followers: 90,
+  following: 22,
+  stars: 35,
+  public_repos: 127,
+  public_gists: 29,
+  flagship_projects: FLAGSHIP_PROJECTS.map(
+    ({ name }) => FLAGSHIP_FALLBACKS[name]
+  ),
   source: "fallback",
 };
 
 let cachedSummary: GithubSummary | null = null;
 let cacheExpiresAt = 0;
 
-function toRepoSummary(repo?: GithubRepo): RepoSummary | null {
+function toRepoSummary(
+  repo: GithubRepo | undefined,
+  description?: string
+): RepoSummary | null {
   if (!repo) return null;
 
   return {
     name: repo.name,
     html_url: repo.html_url,
-    description: repo.description,
+    description: description ?? repo.description,
     stars: repo.stargazers_count,
     forks: repo.forks_count,
     language: repo.language,
@@ -156,22 +224,13 @@ async function fetchLiveSummary(): Promise<GithubSummary> {
     (total, repository) => total + repository.stargazers_count,
     0
   );
-  const biggestProject = [...mine].sort((a, b) => {
-    if (b.stargazers_count !== a.stargazers_count) {
-      return b.stargazers_count - a.stargazers_count;
-    }
-    if (b.size !== a.size) return b.size - a.size;
-    return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
-  })[0];
-  const latestProject = [...mine].sort(
-    (a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
-  )[0];
-  const featuredProject =
-    biggestProject && biggestProject.stargazers_count > 0
-      ? biggestProject
-      : latestProject;
-  const featuredKind =
-    biggestProject && biggestProject.stargazers_count > 0 ? "biggest" : "latest";
+  const repositoriesByName = new Map(mine.map((repo) => [repo.name, repo]));
+  const flagshipProjects = FLAGSHIP_PROJECTS.map(({ name, description }) => {
+    return (
+      toRepoSummary(repositoriesByName.get(name), description) ??
+      FLAGSHIP_FALLBACKS[name]
+    );
+  });
 
   return {
     username: user.login,
@@ -183,10 +242,7 @@ async function fetchLiveSummary(): Promise<GithubSummary> {
     stars,
     public_repos: user.public_repos,
     public_gists: user.public_gists,
-    featured_kind: featuredKind,
-    featured_project: toRepoSummary(featuredProject),
-    latest_project: toRepoSummary(latestProject),
-    biggest_project: toRepoSummary(biggestProject),
+    flagship_projects: flagshipProjects,
     source: "live",
   };
 }

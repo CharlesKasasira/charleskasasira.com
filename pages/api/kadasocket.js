@@ -8,7 +8,7 @@ const ioHandler = (req, res) => {
 
     io.on("connection", (socket) => {
       socket.broadcast.emit("a user connected");
-      socket.on("hello", (msg) => {
+      socket.on("hello", () => {
         socket.emit("hello", "world!");
       });
     });

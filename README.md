@@ -1,37 +1,40 @@
-# <a href="https://www.charleskasasira.com">charleskasasira.com</a> 
+# [charleskasasira.com](https://charleskasasira.com)
 
-[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=My%20portfolio%20built%20with%20Next.js%2013%2C%20Tailwindcss%2C%20and%20Typescript.%20&url=https://github.com/CharlesKasasira/charleskasasira.com&via=kasasiraC&hashtags=opensource)
+Charles Kasasira's portfolio for selected software projects, technical writing,
+and videos. The projects page combines a manually curated showcase with live
+GitHub statistics, so popularity does not decide which work represents the
+portfolio.
 
+## Stack
 
-## Technology stack
+- Next.js 16 and React 19
+- TypeScript
+- Tailwind CSS 4
+- Vercel Analytics and deployment
 
-- **Styling:** [tailwindcss](https://tailwindcss.com/)
-- **Framework:** [Next.js](https://nextjs.org/)
-- **Deployment:** [Vercel](https://vercel.com/)
+## Local development
 
-
-## Running locally
-
-1. Clone this repo:
-
-```sh
-$ git clone https://github.com/CharlesKasasira/charleskasasira.com.git
-```
-
-2. Then go to the project's folder:
+Use Node.js 24 and npm. The committed `package-lock.json` is the authoritative
+dependency lockfile.
 
 ```sh
+git clone https://github.com/CharlesKasasira/charleskasasira.com.git
 cd charleskasasira.com
-```
-
-3. Install all dependencies:
-
-```sh
-npm install
-```
-
-4. Run locally:
-
-```sh
+npm ci
 npm run dev
 ```
+
+The development server runs at <http://localhost:3002>.
+
+## Verification
+
+Run the same checks used by GitHub Actions:
+
+```sh
+npm run lint
+npm audit --omit=dev --audit-level=high
+npm run build
+```
+
+Dependabot checks npm dependencies weekly. GitHub secret scanning and push
+protection are enabled on the repository.

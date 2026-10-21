@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+
+const subscribe = () => () => {};
 
 interface DarkModeSwitchProps {
   checked: boolean;
@@ -13,8 +15,11 @@ export function DarkModeSwitch({
   size = 24,
   style
 }: DarkModeSwitchProps) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
 
   return (
     <button

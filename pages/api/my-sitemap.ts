@@ -1,8 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-const { SitemapStream, streamToPromise } = require("sitemap");
-const { Readable } = require("stream");
+import { Readable } from "node:stream";
+import { SitemapStream, streamToPromise } from "sitemap";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function sitemapHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // An array with your links
   const links = [
     { url: "", changefreq: "always", priority: 0.8 },
@@ -18,9 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     "Content-Type": "application/xml",
   });
 
-  const xmlString = await streamToPromise(
-    Readable.from(links).pipe(stream)
-  ).then((data: any) => data.toString());
+  const xmlString = await streamToPromise(Readable.from(links).pipe(stream));
 
-  res.end(xmlString);
-};
+  res.end(xmlString.toString());
+}

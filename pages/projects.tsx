@@ -78,11 +78,7 @@ export default function Projects({
     },
   ];
 
-  const featuredProject = data?.featured_project;
-  const featuredLabel =
-    data?.featured_kind === "biggest"
-      ? "Biggest project (by stars)"
-      : "Latest project";
+  const flagshipProjects = data?.flagship_projects ?? [];
   const username = data?.username ?? DEFAULT_USERNAME;
 
   return (
@@ -98,8 +94,8 @@ export default function Projects({
           Projects
         </h1>
         <p className="max-w-2xl text-zinc-700 dark:text-zinc-300">
-          Quick snapshot of what I am building on GitHub: account stats, real
-          commit graph, and a featured project.
+          A curated view of the products, experiments, and public resources
+          that best represent what I am building.
         </p>
 
         <div className="mt-5 flex items-center gap-4">
@@ -184,76 +180,64 @@ export default function Projects({
       </section>
 
       <section className="mb-4 w-full">
-        <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          {featuredLabel}
+        <h2 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          Selected work
         </h2>
+        <p className="mb-5 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
+          These projects are selected deliberately for the problems they solve
+          and the range of engineering they represent. GitHub activity keeps
+          their metadata current, but stars do not decide what appears here.
+        </p>
 
-        {!featuredProject ? (
+        {flagshipProjects.length === 0 ? (
           <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
               {isLoading
-                ? "Loading featured project..."
-                : "No featured project data is available right now."}
+                ? "Loading selected projects..."
+                : "No selected project data is available right now."}
             </p>
           </div>
         ) : (
-          <article className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60">
-            <div className="mb-3 flex items-start justify-between gap-4">
-              <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-                {featuredProject.name}
-              </h3>
-              <a
-                href={featuredProject.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-zinc-700 transition hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+          <div className="grid gap-4 md:grid-cols-2">
+            {flagshipProjects.map((project) => (
+              <article
+                key={project.name}
+                className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
               >
-                View on GitHub
-                <FiExternalLink />
-              </a>
-            </div>
+                <div className="mb-3 flex items-start justify-between gap-4">
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                    {project.name}
+                  </h3>
+                  <a
+                    href={project.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`View ${project.name} on GitHub`}
+                    className="rounded-full border border-zinc-300 p-2 text-zinc-600 transition hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+                  >
+                    <FiExternalLink />
+                  </a>
+                </div>
 
-            <p className="mb-5 max-w-3xl text-zinc-600 dark:text-zinc-400">
-              {featuredProject.description ||
-                "No description provided for this repository."}
-            </p>
+                <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-400">
+                  {project.description}
+                </p>
 
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-                <p className="text-xs uppercase tracking-[0.1em] text-zinc-500 dark:text-zinc-400">
-                  Stars
-                </p>
-                <p className="mt-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                  {featuredProject.stars.toLocaleString("en-US")}
-                </p>
-              </div>
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-                <p className="text-xs uppercase tracking-[0.1em] text-zinc-500 dark:text-zinc-400">
-                  Forks
-                </p>
-                <p className="mt-2 flex items-center gap-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                  <FiGitBranch />
-                  {featuredProject.forks.toLocaleString("en-US")}
-                </p>
-              </div>
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-                <p className="text-xs uppercase tracking-[0.1em] text-zinc-500 dark:text-zinc-400">
-                  Language
-                </p>
-                <p className="mt-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                  {featuredProject.language || "Not set"}
-                </p>
-              </div>
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
-                <p className="text-xs uppercase tracking-[0.1em] text-zinc-500 dark:text-zinc-400">
-                  Last push
-                </p>
-                <p className="mt-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                  {formatDate(featuredProject.pushed_at)}
-                </p>
-              </div>
-            </div>
-          </article>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-zinc-200 pt-4 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+                  <span>{project.language || "Mixed stack"}</span>
+                  <span className="inline-flex items-center gap-1">
+                    <AiFillStar />
+                    {project.stars.toLocaleString("en-US")}
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <FiGitBranch />
+                    {project.forks.toLocaleString("en-US")}
+                  </span>
+                  <span>Updated {formatDate(project.pushed_at)}</span>
+                </div>
+              </article>
+            ))}
+          </div>
         )}
       </section>
     </Container>

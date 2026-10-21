@@ -21,9 +21,12 @@ export default function useDelayedRender(
       }, enterDelay);
       return () => clearTimeout(timer);
     } else {
-      setRendered(false);
+      const renderTimer = setTimeout(() => setRendered(false), 0);
       const unmountTimer = setTimeout(() => setMounted(false), exitDelay);
-      return () => clearTimeout(unmountTimer);
+      return () => {
+        clearTimeout(renderTimer);
+        clearTimeout(unmountTimer);
+      };
     }
   }, [active, enterDelay, exitDelay]);
 

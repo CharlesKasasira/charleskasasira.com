@@ -1,22 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 type GithubGraphProps = {
   username: string;
 };
 
-function GithubGraph({ username }: GithubGraphProps) {
-  const contributionsUrl = useMemo(
-    () => `/api/githubGraph?username=${encodeURIComponent(username)}`,
-    [username]
-  );
+type GithubGraphImageProps = GithubGraphProps & {
+  contributionsUrl: string;
+};
 
+function GithubGraphImage({ username, contributionsUrl }: GithubGraphImageProps) {
   const [hasError, setHasError] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
-
-  useEffect(() => {
-    setHasError(false);
-    setHasLoaded(false);
-  }, [contributionsUrl]);
 
   return (
     <div className="w-full overflow-x-auto rounded-2xl border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950/60">
@@ -67,6 +61,21 @@ function GithubGraph({ username }: GithubGraphProps) {
         </div>
       )}
     </div>
+  );
+}
+
+function GithubGraph({ username }: GithubGraphProps) {
+  const contributionsUrl = useMemo(
+    () => `/api/githubGraph?username=${encodeURIComponent(username)}`,
+    [username]
+  );
+
+  return (
+    <GithubGraphImage
+      key={contributionsUrl}
+      username={username}
+      contributionsUrl={contributionsUrl}
+    />
   );
 }
 

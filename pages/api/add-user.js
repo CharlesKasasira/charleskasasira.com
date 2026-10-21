@@ -1,11 +1,9 @@
-const { createClient } = require("@supabase/supabase-js");
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL_KADASAFE;
 const supabaseKey = process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY_KADASAFE;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY_KADASAFE;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 
 const handler = async (req, res) => {
   try {
