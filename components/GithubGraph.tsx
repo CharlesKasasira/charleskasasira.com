@@ -49,7 +49,6 @@ function GithubGraphImage({ username, contributionsUrl }: GithubGraphImageProps)
           {!hasLoaded ? (
             <div className="absolute inset-0 animate-pulse rounded-xl bg-zinc-100 dark:bg-zinc-900" />
           ) : null}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={contributionsUrl}
             alt={`${username} GitHub contribution graph`}
