@@ -5,12 +5,27 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import useSWR from "swr";
 import { AiFillStar } from "react-icons/ai";
 import { FiExternalLink, FiGitBranch } from "react-icons/fi";
-import { RiGitRepositoryLine, RiUserFollowLine, RiUserSharedLine } from "react-icons/ri";
+import { RiGitRepositoryLine, RiUserFollowLine } from "react-icons/ri";
 import { BiCodeBlock } from "react-icons/bi";
 import fetcher from "utils/fetcher";
 import type { GithubSummary } from "utils/github";
 
 const DEFAULT_USERNAME = "charleskasasira";
+
+const liveProjects = [
+  {
+    name: "Git Quest",
+    href: "https://git.charleskasasira.com/",
+    description:
+      "Learn Git by restoring a fractured timeline through interactive terminal challenges.",
+  },
+  {
+    name: "Fala — Portuguese Flashcards",
+    href: "https://portuguese.charleskasasira.com/",
+    description:
+      "Learn Brazilian Portuguese for real conversations with survival phrases, stories, speaking practice, and offline study.",
+  },
+];
 
 function formatDate(value?: string) {
   if (!value) return "-";
@@ -53,12 +68,6 @@ export default function Projects({
       icon: <RiUserFollowLine />,
     },
     {
-      id: "following",
-      label: "Following",
-      value: data?.following,
-      icon: <RiUserSharedLine />,
-    },
-    {
       id: "repos",
       label: "Public repos",
       value: data?.public_repos,
@@ -79,6 +88,9 @@ export default function Projects({
   ];
 
   const flagshipProjects = data?.flagship_projects ?? [];
+  const repositoryProjects = flagshipProjects.filter(
+    (project) => project.name !== "git-quest"
+  );
   const username = data?.username ?? DEFAULT_USERNAME;
 
   return (
@@ -87,9 +99,6 @@ export default function Projects({
       description="A summary of Charles Kasasira's GitHub activity, contributions, and featured project work."
     >
       <section className="mb-8 w-full">
-        <p className="mb-3 inline-flex rounded-full border border-amber-500/30 bg-amber-50 px-4 py-1 text-xs font-medium tracking-[0.12em] text-amber-900 dark:border-amber-400/40 dark:bg-amber-500/20 dark:text-amber-100">
-          GITHUB SUMMARY
-        </p>
         <h1 className="mb-3 text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 md:text-5xl">
           Projects
         </h1>
@@ -185,60 +194,99 @@ export default function Projects({
         </h2>
         <p className="mb-5 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
           These projects are selected deliberately for the problems they solve
-          and the range of engineering they represent. GitHub activity keeps
-          their metadata current, but stars do not decide what appears here.
+          and the range of engineering they represent. Live links open the
+          deployed products, while GitHub keeps repository metadata current.
         </p>
 
-        {flagshipProjects.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              {isLoading
-                ? "Loading selected projects..."
-                : "No selected project data is available right now."}
-            </p>
-          </div>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {flagshipProjects.map((project) => (
-              <article
-                key={project.name}
-                className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
-              >
-                <div className="mb-3 flex items-start justify-between gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
+          {liveProjects.map((project) => (
+            <article
+              key={project.href}
+              className="flex h-full flex-col rounded-2xl border border-amber-200 bg-amber-50/60 p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-sm dark:border-amber-500/30 dark:bg-amber-500/10 dark:hover:border-amber-400/60"
+            >
+              <div className="mb-3 flex items-start justify-between gap-4">
+                <div>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-amber-700 dark:text-amber-300">
+                    Live project
+                  </p>
                   <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
                     {project.name}
                   </h3>
-                  <a
-                    href={project.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`View ${project.name} on GitHub`}
-                    className="rounded-full border border-zinc-300 p-2 text-zinc-600 transition hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
-                  >
-                    <FiExternalLink />
-                  </a>
                 </div>
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${project.name}`}
+                  className="rounded-full border border-amber-300 bg-white p-2 text-amber-700 transition hover:border-amber-700 hover:text-amber-900 dark:border-amber-500/50 dark:bg-zinc-950 dark:text-amber-300 dark:hover:border-amber-300 dark:hover:text-amber-100"
+                >
+                  <FiExternalLink />
+                </a>
+              </div>
+              <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-300">
+                {project.description}
+              </p>
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-amber-700 transition hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100"
+              >
+                Visit live site
+                <FiExternalLink aria-hidden="true" />
+              </a>
+            </article>
+          ))}
 
-                <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-400">
-                  {project.description}
-                </p>
+          {repositoryProjects.map((project) => (
+            <article
+              key={project.name}
+              className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+            >
+              <div className="mb-3 flex items-start justify-between gap-4">
+                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                  {project.name}
+                </h3>
+                <a
+                  href={project.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${project.name} on GitHub`}
+                  className="rounded-full border border-zinc-300 p-2 text-zinc-600 transition hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+                >
+                  <FiExternalLink />
+                </a>
+              </div>
 
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-zinc-200 pt-4 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
-                  <span>{project.language || "Mixed stack"}</span>
-                  <span className="inline-flex items-center gap-1">
-                    <AiFillStar />
-                    {project.stars.toLocaleString("en-US")}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <FiGitBranch />
-                    {project.forks.toLocaleString("en-US")}
-                  </span>
-                  <span>Updated {formatDate(project.pushed_at)}</span>
-                </div>
-              </article>
-            ))}
+              <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-400">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-zinc-200 pt-4 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+                <span>{project.language || "Mixed stack"}</span>
+                <span className="inline-flex items-center gap-1">
+                  <AiFillStar />
+                  {project.stars.toLocaleString("en-US")}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <FiGitBranch />
+                  {project.forks.toLocaleString("en-US")}
+                </span>
+                <span>Updated {formatDate(project.pushed_at)}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {repositoryProjects.length === 0 ? (
+          <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              {isLoading
+                ? "Loading repository details..."
+                : "Repository details are unavailable right now."}
+            </p>
           </div>
-        )}
+        ) : null}
       </section>
     </Container>
   );

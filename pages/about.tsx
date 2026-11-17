@@ -59,9 +59,6 @@ export default function About() {
     >
       <div className="mb-4 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
         <section className="space-y-5">
-          <p className="inline-flex rounded-full border border-emerald-500/30 bg-emerald-50 px-4 py-1 text-xs font-semibold tracking-[0.12em] text-emerald-900 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200">
-            ABOUT
-          </p>
           <h1 className="text-4xl font-black tracking-tight md:text-5xl">
             I build digital products that are useful, fast, and easy to grow.
           </h1>
@@ -91,7 +88,7 @@ export default function About() {
           <div className="space-y-3">
             {timeline.map((item) => (
               <article
-                key={item.org}
+                key={`${item.org}-${item.role}`}
                 className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-5 py-4 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10"
               >
                 <div>

@@ -1,19 +1,11 @@
 import cn from 'classnames';
 import Link from 'next/link';
-import useDelayedRender from 'utils/useDelayedRender';
 import { useState, useEffect, type SVGProps } from 'react';
 import styles from 'styles/mobile-menu.module.css';
 import { menuData } from 'utils/menuData';
 
 export default function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { mounted: isMenuMounted, rendered: isMenuRendered } = useDelayedRender(
-    isMenuOpen,
-    {
-      enterDelay: 20,
-      exitDelay: 300
-    }
-  );
 
   function toggleMenu() {
     if (isMenuOpen) {
@@ -36,30 +28,42 @@ export default function MobileMenu() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        document.body.style.overflow = '';
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isMenuOpen]);
+
   return (
     <>
       <button
         className={cn(styles.burger, 'visible md:hidden')}
-        aria-label="Toggle menu"
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-controls="mobile-navigation"
+        aria-expanded={isMenuOpen}
         type="button"
         onClick={toggleMenu}
       >
         <MenuIcon data-hide={isMenuOpen} />
         <CrossIcon data-hide={!isMenuOpen} />
       </button>
-      {isMenuMounted && (
+      {isMenuOpen && (
         <ul
-          className={cn(
-            styles.menu,
-            'flex flex-col absolute bg-white dark:bg-[#18181b]',
-            isMenuRendered && styles.menuRendered
-          )}
+          id="mobile-navigation"
+          className="absolute inset-x-0 top-full z-[60] flex h-[calc(100dvh-81px)] list-none flex-col overflow-y-auto bg-white px-5 py-4 shadow-lg md:hidden dark:bg-zinc-950 sm:px-8"
         >
-          {menuData.map((item, index) => (
+          {menuData.map((item) => (
             <li
               key={item.text}
-              className="border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm font-semibold"
-              style={{ transitionDelay: `${150 + index * 25}ms` }}
+              className="border-b border-zinc-200 text-sm font-semibold text-zinc-900 dark:border-zinc-800 dark:text-zinc-100"
             >
               {item.external ? (
                 <a
@@ -67,12 +71,17 @@ export default function MobileMenu() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMenu}
+                  className="flex w-full py-4"
                 >
-                  <span className="flex w-auto pb-4">{item.text}</span>
+                  {item.text}
                 </a>
               ) : (
-                <Link href={item.href} onClick={closeMenu}>
-                  <span className="flex w-auto pb-4">{item.text}</span>
+                <Link
+                  href={item.href}
+                  onClick={closeMenu}
+                  className="flex w-full py-4"
+                >
+                  {item.text}
                 </Link>
               )}
             </li>
