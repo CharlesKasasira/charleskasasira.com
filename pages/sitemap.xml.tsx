@@ -24,6 +24,12 @@ function generateSiteMap() {
        <priority>0.8</priority>
      </url>
      <url>
+       <loc>https://charleskasasira.com/about</loc>
+       <lastmod>${lastUpdated}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.5</priority>
+     </url>
+     <url>
        <loc>https://charleskasasira.com/projects</loc>
        <lastmod>${lastUpdated}</lastmod>
        <changefreq>weekly</changefreq>

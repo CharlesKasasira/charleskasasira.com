@@ -56,7 +56,10 @@ function Nav() {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <nav className="pointer-events-none fixed inset-x-0 top-4 z-50 w-full">
+    <nav
+      aria-label="Primary navigation"
+      className="pointer-events-none fixed inset-x-0 top-4 z-50 w-full"
+    >
       <div className="site-gutter flex w-full items-center justify-between gap-3">
         <a href="#skip" className="skip-nav">
           Skip to content

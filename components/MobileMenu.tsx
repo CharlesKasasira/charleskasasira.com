@@ -1,50 +1,106 @@
 import cn from 'classnames';
 import Link from 'next/link';
-import { useState, useEffect, type SVGProps } from 'react';
+import { useEffect, useRef, useState, type SVGProps } from 'react';
 import styles from 'styles/mobile-menu.module.css';
 import { menuData } from 'utils/menuData';
 
+const focusableSelector = [
+  'a[href]',
+  'button:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
 export default function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   function toggleMenu() {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-      document.body.style.overflow = '';
-    } else {
-      setIsMenuOpen(true);
-      document.body.style.overflow = 'hidden';
+    if (!isMenuOpen) {
+      returnFocusRef.current =
+        document.activeElement instanceof HTMLElement
+          ? document.activeElement
+          : triggerRef.current;
     }
+
+    setIsMenuOpen((open) => !open);
   }
 
   function closeMenu() {
     setIsMenuOpen(false);
-    document.body.style.overflow = '';
   }
-
-  useEffect(() => {
-    return function cleanup() {
-      document.body.style.overflow = '';
-    };
-  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) return;
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const getFocusableElements = () => {
+      const menuElements = menuRef.current
+        ? Array.from(
+            menuRef.current.querySelectorAll<HTMLElement>(focusableSelector)
+          )
+        : [];
+
+      return [triggerRef.current, ...menuElements].filter(
+        (element): element is HTMLElement =>
+          Boolean(element && element.tabIndex !== -1)
+      );
+    };
+
+    const firstMenuItem = menuRef.current?.querySelector<HTMLElement>(
+      focusableSelector
+    );
+    firstMenuItem?.focus();
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
-        setIsMenuOpen(false);
-        document.body.style.overflow = '';
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = getFocusableElements();
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements.at(-1);
+      const activeElement = document.activeElement;
+
+      if (!firstElement || !lastElement) {
+        event.preventDefault();
+        return;
+      }
+
+      if (!focusableElements.includes(activeElement as HTMLElement)) {
+        event.preventDefault();
+        firstElement.focus();
+      } else if (event.shiftKey && activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
       }
     }
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+
+      const returnTarget = returnFocusRef.current;
+      if (returnTarget?.isConnected) returnTarget.focus();
+      returnFocusRef.current = null;
+    };
   }, [isMenuOpen]);
 
   return (
     <>
       <button
+        ref={triggerRef}
         className={cn(
           styles.burger,
           'visible rounded-full bg-[var(--site-surface)] text-[var(--site-ink)] backdrop-blur-xl hover:bg-[var(--site-surface-hover)] md:hidden'
@@ -55,41 +111,47 @@ export default function MobileMenu() {
         type="button"
         onClick={toggleMenu}
       >
-        <MenuIcon data-hide={isMenuOpen} />
-        <CrossIcon data-hide={!isMenuOpen} />
+        <MenuIcon aria-hidden="true" focusable="false" data-hide={isMenuOpen} />
+        <CrossIcon aria-hidden="true" focusable="false" data-hide={!isMenuOpen} />
       </button>
       {isMenuOpen && (
-        <ul
+        <div
+          ref={menuRef}
           id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Main navigation"
           className="site-panel pointer-events-auto fixed inset-x-3 top-[4.5rem] z-[60] flex max-h-[calc(100dvh-5.5rem)] list-none flex-col overflow-y-auto p-3 shadow-2xl backdrop-blur-2xl md:hidden"
         >
-          {menuData.map((item) => (
-            <li
-              key={item.text}
-              className="border-b border-[var(--site-rule)] text-base font-medium text-[var(--site-ink)] last:border-0"
-            >
-              {item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={closeMenu}
-                  className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
-                >
-                  {item.text}
-                </a>
-              ) : (
-                <Link
-                  href={item.href}
-                  onClick={closeMenu}
-                  className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
-                >
-                  {item.text}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+          <ul className="list-none">
+            {menuData.map((item) => (
+              <li
+                key={item.text}
+                className="border-b border-[var(--site-rule)] text-base font-medium text-[var(--site-ink)] last:border-0"
+              >
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeMenu}
+                    className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
+                  >
+                    {item.text}
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={closeMenu}
+                    className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
+                  >
+                    {item.text}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </>
   );

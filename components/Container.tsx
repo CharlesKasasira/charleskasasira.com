@@ -11,12 +11,13 @@ type ContainerProps = {
   description?: string;
   type?: string;
   image?: string;
+  robots?: string;
 };
 
 function Container(props: ContainerProps) {
   const router = useRouter();
   const siteUrl = "https://charleskasasira.com";
-  const { children, ...customProps } = props;
+  const { children, robots = "follow, index", ...customProps } = props;
   const meta = {
     title: "Charles Kasasira | Software Designer and Developer",
     description:
@@ -30,7 +31,7 @@ function Container(props: ContainerProps) {
     <div className="site-shell relative flex min-h-screen w-full flex-col">
       <Head>
         <title>{meta.title}</title>
-        <meta name="robots" content="follow, index" />
+        <meta name="robots" content={robots} />
         <meta content={meta.description} name="description" />
         <meta property="og:url" content={`${siteUrl}${router.asPath}`} />
         <link rel="canonical" href={`${siteUrl}${router.asPath}`} />

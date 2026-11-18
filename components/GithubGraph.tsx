@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useMemo, useState } from "react";
 
 type GithubGraphProps = {
@@ -49,11 +50,14 @@ function GithubGraphImage({ username, contributionsUrl }: GithubGraphImageProps)
           {!hasLoaded ? (
             <div className="site-skeleton absolute inset-0 animate-pulse rounded-xl" />
           ) : null}
-          <img
+          <Image
             src={contributionsUrl}
             alt={`${username} GitHub contribution graph`}
+            width={780}
+            height={120}
+            unoptimized
+            priority
             className={`h-auto w-full transition-opacity ${hasLoaded ? "opacity-100" : "opacity-0"}`}
-            loading="eager"
             onLoad={() => setHasLoaded(true)}
             onError={() => setHasError(true)}
           />
