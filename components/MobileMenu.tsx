@@ -45,7 +45,10 @@ export default function MobileMenu() {
   return (
     <>
       <button
-        className={cn(styles.burger, 'visible md:hidden')}
+        className={cn(
+          styles.burger,
+          'visible rounded-full bg-[var(--site-surface)] text-[var(--site-ink)] backdrop-blur-xl hover:bg-[var(--site-surface-hover)] md:hidden'
+        )}
         aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         aria-controls="mobile-navigation"
         aria-expanded={isMenuOpen}
@@ -58,12 +61,12 @@ export default function MobileMenu() {
       {isMenuOpen && (
         <ul
           id="mobile-navigation"
-          className="absolute inset-x-0 top-full z-[60] flex h-[calc(100dvh-81px)] list-none flex-col overflow-y-auto bg-white px-5 py-4 shadow-lg md:hidden dark:bg-zinc-950 sm:px-8"
+          className="site-panel pointer-events-auto fixed inset-x-3 top-[4.5rem] z-[60] flex max-h-[calc(100dvh-5.5rem)] list-none flex-col overflow-y-auto p-3 shadow-2xl backdrop-blur-2xl md:hidden"
         >
           {menuData.map((item) => (
             <li
               key={item.text}
-              className="border-b border-zinc-200 text-sm font-semibold text-zinc-900 dark:border-zinc-800 dark:text-zinc-100"
+              className="border-b border-[var(--site-rule)] text-base font-medium text-[var(--site-ink)] last:border-0"
             >
               {item.external ? (
                 <a
@@ -71,7 +74,7 @@ export default function MobileMenu() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMenu}
-                  className="flex w-full py-4"
+                  className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
                 >
                   {item.text}
                 </a>
@@ -79,7 +82,7 @@ export default function MobileMenu() {
                 <Link
                   href={item.href}
                   onClick={closeMenu}
-                  className="flex w-full py-4"
+                  className="flex w-full rounded-xl px-3 py-4 transition hover:bg-[var(--site-surface)]"
                 >
                   {item.text}
                 </Link>
@@ -95,7 +98,7 @@ export default function MobileMenu() {
 function MenuIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
+      className="absolute h-5 w-5 text-[var(--site-ink)]"
       width="20"
       height="20"
       viewBox="0 0 20 20"
@@ -123,7 +126,7 @@ function MenuIcon(props: SVGProps<SVGSVGElement>) {
 function CrossIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className="h-5 w-5 absolute text-gray-900 dark:text-gray-100"
+      className="absolute h-5 w-5 text-[var(--site-ink)]"
       viewBox="0 0 24 24"
       width="24"
       height="24"

@@ -98,11 +98,13 @@ export default function Projects({
       title="Projects - Charles Kasasira"
       description="A summary of Charles Kasasira's GitHub activity, contributions, and featured project work."
     >
-      <section className="mb-8 w-full">
-        <h1 className="mb-3 text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-100 md:text-5xl">
-          Projects
+      <div className="studio-page">
+      <section className="mb-[12vh] w-full">
+        <p className="studio-page-kicker mb-5">Projects</p>
+        <h1 className="studio-page-title max-w-5xl">
+          Selected work and experiments.
         </h1>
-        <p className="max-w-2xl text-zinc-700 dark:text-zinc-300">
+        <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--site-muted)]">
           A curated view of the products, experiments, and public resources
           that best represent what I am building.
         </p>
@@ -117,14 +119,14 @@ export default function Projects({
               className="rounded-full"
             />
           ) : (
-            <div className="h-14 w-14 animate-pulse rounded-full bg-zinc-200 dark:bg-zinc-800" />
+            <div className="site-skeleton h-14 w-14 animate-pulse rounded-full" />
           )}
 
           <a
             href={data?.profile_url ?? `https://github.com/${DEFAULT_USERNAME}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+            className="inline-flex items-center gap-2 rounded-full border border-[var(--site-rule)] px-4 py-2 text-sm font-medium text-[var(--site-muted)] transition hover:border-[var(--site-ink)] hover:text-[var(--site-ink)]"
           >
             @{username}
             <FiExternalLink />
@@ -132,34 +134,35 @@ export default function Projects({
         </div>
       </section>
 
-      <section className="mb-10 w-full">
-        <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          Stats
-        </h2>
+      <section className="mb-[12vh] w-full">
+        <div className="studio-section-heading mb-5">
+          <h2>GitHub</h2>
+          <b>Public activity</b>
+        </div>
         {isLoading && !data ? (
           <div
-            className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
+            className="grid sm:grid-cols-2 lg:grid-cols-4"
             aria-label="Loading GitHub statistics"
           >
             {stats.map((stat) => (
               <div
                 key={stat.id}
-                className="h-24 animate-pulse rounded-2xl bg-zinc-100 dark:bg-zinc-900"
+                className="site-skeleton h-24 animate-pulse border-b border-[var(--site-rule)]"
               />
             ))}
           </div>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
               <article
                 key={stat.id}
-                className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
+                className="border-b border-[var(--site-rule)] py-5 lg:border-r lg:px-5 lg:first:pl-0 lg:last:border-r-0"
               >
-                <p className="mb-3 flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="mb-3 flex items-center gap-2 text-sm text-[var(--site-muted)]">
                   {stat.icon}
                   {stat.label}
                 </p>
-                <p className="text-2xl font-black text-zinc-900 dark:text-zinc-100">
+                <p className="text-4xl font-medium tracking-[-0.025em]">
                   {typeof stat.value === "number"
                     ? stat.value.toLocaleString("en-US")
                     : isLoading
@@ -171,17 +174,17 @@ export default function Projects({
           </div>
         )}
         {data?.source === "fallback" ? (
-          <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
+          <p className="mt-3 text-xs text-[var(--site-muted)]">
             Showing a recent snapshot while GitHub refreshes.
           </p>
         ) : null}
       </section>
 
-      <section className="mb-10 w-full">
-        <h2 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+      <section className="mb-[12vh] w-full">
+        <h2 className="mb-2 text-2xl font-medium tracking-[-0.02em]">
           Commit graph
         </h2>
-        <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mb-4 text-sm text-[var(--site-muted)]">
           A live view of recent GitHub contribution activity, with a direct
           profile link if GitHub cannot provide the graph.
         </p>
@@ -189,10 +192,11 @@ export default function Projects({
       </section>
 
       <section className="mb-4 w-full">
-        <h2 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          Selected work
-        </h2>
-        <p className="mb-5 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
+        <div className="studio-section-heading mb-5">
+          <h2>Selected work</h2>
+          <b>Products and code</b>
+        </div>
+        <p className="mb-5 max-w-3xl text-sm text-[var(--site-muted)]">
           These projects are selected deliberately for the problems they solve
           and the range of engineering they represent. Live links open the
           deployed products, while GitHub keeps repository metadata current.
@@ -202,14 +206,14 @@ export default function Projects({
           {liveProjects.map((project) => (
             <article
               key={project.href}
-              className="flex h-full flex-col rounded-2xl border border-amber-200 bg-amber-50/60 p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-amber-400 hover:shadow-sm dark:border-amber-500/30 dark:bg-amber-500/10 dark:hover:border-amber-400/60"
+              className="flex h-full flex-col border-t border-[var(--site-rule)] py-6 transition hover:pl-3"
             >
               <div className="mb-3 flex items-start justify-between gap-4">
                 <div>
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-amber-700 dark:text-amber-300">
+                  <p className="studio-label mb-2 text-[var(--site-muted)]">
                     Live project
                   </p>
-                  <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                  <h3 className="text-3xl font-medium tracking-[-0.025em]">
                     {project.name}
                   </h3>
                 </div>
@@ -218,19 +222,19 @@ export default function Projects({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Open ${project.name}`}
-                  className="rounded-full border border-amber-300 bg-white p-2 text-amber-700 transition hover:border-amber-700 hover:text-amber-900 dark:border-amber-500/50 dark:bg-zinc-950 dark:text-amber-300 dark:hover:border-amber-300 dark:hover:text-amber-100"
+                  className="rounded-full border border-[var(--site-rule)] p-2 transition hover:border-[var(--site-ink)]"
                 >
                   <FiExternalLink />
                 </a>
               </div>
-              <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-300">
+              <p className="mb-5 flex-1 text-[var(--site-muted)]">
                 {project.description}
               </p>
               <a
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-amber-700 transition hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100"
+                className="inline-flex w-fit items-center gap-2 text-sm font-semibold underline decoration-[var(--site-rule)] underline-offset-4 transition hover:decoration-current"
               >
                 Visit live site
                 <FiExternalLink aria-hidden="true" />
@@ -241,10 +245,10 @@ export default function Projects({
           {repositoryProjects.map((project) => (
             <article
               key={project.name}
-              className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
+              className="flex h-full flex-col border-t border-[var(--site-rule)] py-6 transition hover:pl-3"
             >
               <div className="mb-3 flex items-start justify-between gap-4">
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                <h3 className="text-3xl font-medium tracking-[-0.025em]">
                   {project.name}
                 </h3>
                 <a
@@ -252,17 +256,17 @@ export default function Projects({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View ${project.name} on GitHub`}
-                  className="rounded-full border border-zinc-300 p-2 text-zinc-600 transition hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-400 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+                  className="rounded-full border border-[var(--site-rule)] p-2 text-[var(--site-muted)] transition hover:border-[var(--site-ink)] hover:text-[var(--site-ink)]"
                 >
                   <FiExternalLink />
                 </a>
               </div>
 
-              <p className="mb-5 flex-1 text-zinc-600 dark:text-zinc-400">
+              <p className="mb-5 flex-1 text-[var(--site-muted)]">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-zinc-200 pt-4 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[var(--site-rule)] pt-4 text-sm text-[var(--site-muted)]">
                 <span>{project.language || "Mixed stack"}</span>
                 <span className="inline-flex items-center gap-1">
                   <AiFillStar />
@@ -279,8 +283,8 @@ export default function Projects({
         </div>
 
         {repositoryProjects.length === 0 ? (
-          <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900/60">
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="site-panel p-5">
+            <p className="text-sm text-[var(--site-muted)]">
               {isLoading
                 ? "Loading repository details..."
                 : "Repository details are unavailable right now."}
@@ -288,6 +292,7 @@ export default function Projects({
           </div>
         ) : null}
       </section>
+      </div>
     </Container>
   );
 }

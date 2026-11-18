@@ -1,22 +1,23 @@
 import Container from "components/Container";
 import Link from "next/link";
-import React from "react";
 
 function NotFound() {
   return (
     <Container title="404 - Charles Kasasira">
-      <div className="flex flex-col justify-center items-start my-16 w-full">
-        <h1 className="font-bold text-8xl md:text-9xl tracking-tight mb-1 text-black dark:text-white font-sans">
-          404
+      <div className="studio-page flex min-h-[60vh] w-full flex-col items-start justify-center pb-[10vh]">
+        <p className="studio-page-kicker mb-5">Error 404</p>
+        <h1 className="studio-page-title max-w-4xl">
+          Page not found.
         </h1>
-        <h1 className="font-bold text-3xl md:text-5xl tracking-tight mb-1 text-black dark:text-white font-sans">
-          Page Not Found
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mb-16">
-          Not to worry you didn&apos;t break the internet, I just could not find this page. You can head over to my homepage or checkout my youtube videos.
+        <p className="mb-10 mt-8 max-w-xl text-lg leading-8 text-[var(--site-muted)]">
+          You did not break the internet. This page may have moved, or the link
+          may no longer exist.
         </p>
-        <Link href="/">
-          <span className="p-1 sm:p-4 w-64 font-bold mx-auto bg-gray-200 dark:bg-gray-800 text-center rounded-md text-black dark:text-white">Back to Home</span>
+        <Link
+          href="/"
+          className="inline-flex rounded-full border border-[var(--site-rule)] px-5 py-3 text-sm font-semibold transition hover:border-[var(--site-ink)]"
+        >
+          Back to home
         </Link>
       </div>
     </Container>

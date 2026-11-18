@@ -6,7 +6,7 @@ export type MenuItem = {
 
 export const menuData: MenuItem[] = [
   {
-    text: "Home",
+    text: "Charles",
     href: "/",
   },
   {
@@ -18,12 +18,11 @@ export const menuData: MenuItem[] = [
     href: "/projects",
   },
   {
-    text: "YouTube",
-    href: "/youtube",
+    text: "Writing",
+    href: "/blog",
   },
   {
-    text: "Blog",
-    href: "https://blog.charleskasasira.com",
-    external: true,
+    text: "YouTube",
+    href: "/youtube",
   },
 ];

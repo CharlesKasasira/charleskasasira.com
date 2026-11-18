@@ -1,54 +1,43 @@
 import Container from "components/Container";
-import Link from "next/link";
-import { FiAward } from "react-icons/fi";
 
 const skills = [
-  "Frontend Engineering",
-  "Product Design Systems",
+  "Frontend engineering",
+  "Product design systems",
   "TypeScript + Next.js",
-  "API Integrations",
-  "Technical Writing",
-  "Developer Education",
+  "API integrations",
+  "Technical writing",
+  "Developer education",
 ];
 
 const timeline = [
-  {
-    org: "RENU",
-    role: "Software Engineer | DevOps",
-    date: "Present",
-  },
-  {
-    org: "RENU",
-    role: "Intern",
-    date: "Aug 2023",
-  },
-  {
-    org: "Ablestate",
-    role: "Frontend Developer",
-    date: "May 2023",
-  },
-  {
-    org: "WHD",
-    role: "Graphics Designer",
-    date: "Sept 2020",
-  },
-  {
-    org: "Byte Of Hope",
-    role: "Founding Member",
-    date: "June 2019",
-  },
+  { org: "RENU", role: "Software Engineer | DevOps", date: "Present" },
+  { org: "RENU", role: "Intern", date: "Aug 2023" },
+  { org: "Ablestate", role: "Frontend Developer", date: "May 2023" },
+  { org: "WHD", role: "Graphics Designer", date: "Sept 2020" },
+  { org: "Byte Of Hope", role: "Founding Member", date: "June 2019" },
 ];
 
 const certifications = [
   { title: "Machine Learning with Python", issuer: "freeCodeCamp" },
-  {
-    title: "Introduction to Generative AI",
-    issuer: "Google Cloud Skill Boost",
-  },
+  { title: "Introduction to Generative AI", issuer: "Google Cloud Skill Boost" },
   { title: "Introduction to Machine Learning", issuer: "Kaggle" },
   { title: "Front-End Development Libraries", issuer: "freeCodeCamp" },
   { title: "Full-Stack Web Development", issuer: "Ablestate" },
   { title: "Mobile App Development with Flutter", issuer: "GDSC MUK" },
+];
+
+const links = [
+  { label: "GitHub", value: "@charleskasasira", href: "https://github.com/charleskasasira" },
+  {
+    label: "LinkedIn",
+    value: "charleskasasira",
+    href: "https://www.linkedin.com/in/charleskasasira/",
+  },
+  {
+    label: "YouTube",
+    value: "@charleskasasira",
+    href: "https://youtube.com/@charleskasasira",
+  },
 ];
 
 export default function About() {
@@ -57,130 +46,108 @@ export default function About() {
       title="About | Charles Kasasira"
       description="Background, skills, and experience for Charles Kasasira."
     >
-      <div className="mb-4 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
-        <section className="space-y-5">
-          <h1 className="text-4xl font-black tracking-tight md:text-5xl">
-            I build digital products that are useful, fast, and easy to grow.
-          </h1>
-          <p className="max-w-3xl text-lg leading-8 text-zinc-700 dark:text-zinc-300">
+      <div className="studio-page">
+        <header className="grid gap-10 pb-[14vh] lg:grid-cols-[minmax(0,1.5fr)_minmax(18rem,0.7fr)] lg:items-end">
+          <div>
+            <p className="studio-page-kicker mb-5">About</p>
+            <h1 className="studio-page-title">
+              Building useful things, carefully.
+            </h1>
+          </div>
+          <p className="max-w-xl text-xl leading-8 tracking-[-0.01em] text-[var(--site-muted)]">
             I am a software designer and developer based in Kampala, Uganda. I
-            enjoy turning ideas into scalable products, then documenting the
-            process so other developers can ship faster with fewer mistakes.
+            turn ideas into scalable products, then document the process so
+            others can build with fewer mistakes.
           </p>
-        </section>
+        </header>
 
-        <section>
-          <h2 className="mb-4 text-2xl font-bold">Core Skills</h2>
-          <div className="flex flex-wrap gap-2">
-            {skills.map((skill) => (
-              <span
-                key={skill}
-                className="cursor-default select-none rounded-full border border-zinc-300 bg-zinc-100 px-4 py-1 text-sm text-zinc-700 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-900 hover:shadow-md hover:shadow-emerald-500/10 active:scale-95 active:shadow-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10 dark:hover:text-emerald-200"
-              >
-                {skill}
-              </span>
-            ))}
+        <section className="grid gap-12 border-t border-[var(--site-rule)] py-[10vh] lg:grid-cols-[0.65fr_1.35fr]">
+          <div>
+            <p className="studio-page-kicker">What I work with</p>
+            <h2 className="mt-4 max-w-md text-[clamp(2rem,4vw,4rem)] font-medium leading-[1.04] tracking-[-0.025em]">
+              Design judgment with engineering depth.
+            </h2>
           </div>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-2xl font-bold">Experience Highlights</h2>
-          <div className="space-y-3">
-            {timeline.map((item) => (
-              <article
-                key={`${item.org}-${item.role}`}
-                className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-zinc-50 px-5 py-4 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-emerald-500 dark:hover:bg-emerald-500/10"
-              >
-                <div>
-                  <p className="font-semibold">{item.org}</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                    {item.role}
-                  </p>
-                </div>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  {item.date}
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <h2 className="mb-4 text-2xl font-bold">Certifications</h2>
-          <ul className="grid gap-3 text-zinc-700 md:grid-cols-2 dark:text-zinc-300">
-            {certifications.map((cert) => (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8">
+            {skills.map((skill, index) => (
               <li
-                key={cert.title}
-                className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-amber-400 hover:bg-amber-50 hover:shadow-lg hover:shadow-amber-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-amber-500 dark:hover:bg-amber-500/10"
+                key={skill}
+                className="flex items-baseline gap-5 border-b border-[var(--site-rule)] py-4"
               >
-                <div className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-xl text-amber-700 transition duration-200 motion-safe:group-hover:rotate-6 motion-safe:group-hover:scale-110 dark:bg-amber-500/15 dark:text-amber-300">
-                    <FiAward aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="font-semibold leading-6 text-zinc-900 dark:text-zinc-100">
-                      {cert.title}
-                    </p>
-                    <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                      {cert.issuer}
-                    </p>
-                  </div>
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-amber-500 transition-transform duration-200 group-hover:scale-x-100"
-                />
+                <span className="text-xs text-[var(--site-muted)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="text-xl font-medium tracking-[-0.015em]">{skill}</span>
               </li>
             ))}
           </ul>
         </section>
 
-        <section>
-          <h2 className="mb-4 text-2xl font-bold">Links</h2>
-          <ul className="space-y-2 text-zinc-700 dark:text-zinc-300">
-            <li>
-              GitHub:{" "}
-              <a
-                href="https://github.com/charleskasasira"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+        <section className="py-[10vh]">
+          <div className="studio-section-heading">
+            <h2>Experience</h2>
+            <b>Where I have worked</b>
+          </div>
+          <ol>
+            {timeline.map((item, index) => (
+              <li
+                key={item.org + item.role}
+                className="grid gap-3 border-b border-[var(--site-rule)] py-5 sm:grid-cols-[3.75rem_1fr_1fr_auto] sm:items-baseline sm:gap-5"
               >
-                @charleskasasira
-              </a>
-            </li>
-            <li>
-              LinkedIn:{" "}
-              <a
-                href="https://www.linkedin.com/in/charleskasasira/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
+                <span className="text-sm text-[var(--site-muted)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <strong className="text-2xl font-medium tracking-[-0.02em]">
+                  {item.org}
+                </strong>
+                <span className="text-[var(--site-muted)]">{item.role}</span>
+                <span className="studio-caption">{item.date}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="py-[10vh]">
+          <div className="studio-section-heading">
+            <h2>Certifications</h2>
+            <b>Continued learning</b>
+          </div>
+          <ul className="grid gap-x-8 md:grid-cols-2">
+            {certifications.map((cert) => (
+              <li
+                key={cert.title}
+                className="border-b border-[var(--site-rule)] py-5"
               >
-                linkedin.com/in/charleskasasira
-              </a>
-            </li>
-            <li>
-              YouTube:{" "}
-              <a
-                href="https://youtube.com/@charleskasasira"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
-              >
-                youtube.com/@charleskasasira
-              </a>
-            </li>
-            <li>
-              Website:{" "}
-              <Link
-                href="https://charleskasasira.com"
-                className="font-medium text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
-              >
-                charleskasasira.com
-              </Link>
-            </li>
+                <p className="text-lg font-medium tracking-[-0.012em]">{cert.title}</p>
+                <p className="mt-1 text-sm text-[var(--site-muted)]">{cert.issuer}</p>
+              </li>
+            ))}
           </ul>
+        </section>
+
+        <section className="py-[10vh]">
+          <div className="studio-section-heading">
+            <h2>Elsewhere</h2>
+            <b>Find me online</b>
+          </div>
+          <div>
+            {links.map((link, index) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="studio-row"
+              >
+                <span className="studio-row-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <strong>{link.label}</strong>
+                <span className="studio-row-description">{link.value}</span>
+                <span className="studio-row-action">Visit ↗</span>
+              </a>
+            ))}
+          </div>
         </section>
       </div>
     </Container>

@@ -26,7 +26,7 @@ export function DarkModeSwitch({
       type="button"
       aria-label={checked ? 'Switch to light mode' : 'Switch to dark mode'}
       onClick={onChange}
-      className="rounded-full p-1 text-zinc-700 transition hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--site-surface)] text-[var(--site-ink)] backdrop-blur-xl transition hover:bg-[var(--site-surface-hover)]"
       style={style}
     >
       <svg

@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build --webpack",
+    "blog:sync": "node scripts/sync-hashnode.mjs",
     "start": "next start",
     "lint": "eslint . --max-warnings=0"
   },
@@ -23,11 +24,14 @@
     "classnames": "^2.5.1",
     "express": "^4.22.3",
     "framer-motion": "^11.0.0",
+    "gray-matter": "^4.0.3",
     "next": "^16.4.6",
     "next-themes": "^0.4.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-icons": "^5.7.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "sitemap": "^7.1.3",
     "socket.io": "^4.8.4",
     "swr": "^2.5.1"

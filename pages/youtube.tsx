@@ -35,20 +35,20 @@ function StatCard({
   isLoading: boolean;
 }) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-5 shadow-sm transition duration-200 motion-safe:hover:-translate-y-1 hover:border-red-400 hover:bg-red-50 hover:shadow-lg hover:shadow-red-500/10 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-red-500 dark:hover:bg-red-500/10">
+    <article className="group relative overflow-hidden border-b border-[var(--site-rule)] py-5 sm:border-r sm:px-5 sm:first:pl-0 sm:last:border-r-0">
       {isLoading ? (
-        <div className="h-9 w-28 animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />
+        <div className="site-skeleton h-9 w-28 animate-pulse rounded-lg" />
       ) : (
-        <p className="origin-left text-3xl font-black text-zinc-900 transition duration-200 motion-safe:group-hover:scale-105 group-hover:text-red-600 dark:text-zinc-100 dark:group-hover:text-red-400">
+        <p className="origin-left text-4xl font-medium tracking-[-0.025em]">
           {value === null ? "—" : currencyFormatter(value)}
         </p>
       )}
-      <p className="mt-2 text-sm text-zinc-600 transition-colors duration-200 group-hover:text-red-700 dark:text-zinc-400 dark:group-hover:text-red-300">
+      <p className="mt-2 text-sm text-[var(--site-muted)]">
         {label}
       </p>
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-red-600 transition-transform duration-200 group-hover:scale-x-100 motion-reduce:transition-none"
+        className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[var(--site-ink)] transition-transform duration-200 group-hover:scale-x-100 motion-reduce:transition-none"
       />
     </article>
   );
@@ -81,14 +81,15 @@ export default function YouTubePage() {
       title="YouTube | Charles Kasasira"
       description="Videos by Charles Kasasira about frontend engineering, product development, and shipping real software."
     >
-      <div className="mb-4 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
-        <section className="space-y-5">
+      <div className="studio-page mb-4 w-full space-y-[12vh]">
+        <section className="space-y-5 pt-[2vh]">
           <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <h1 className="text-4xl font-black tracking-tight md:text-5xl">
+              <p className="studio-page-kicker mb-5">YouTube</p>
+              <h1 className="studio-page-title max-w-5xl">
                 Build useful software with me.
               </h1>
-              <p className="mt-3 max-w-2xl text-lg leading-8 text-zinc-700 dark:text-zinc-300">
+              <p className="mt-8 max-w-2xl text-lg leading-8 text-[var(--site-muted)]">
                 Practical frontend engineering, product development, and honest
                 lessons from building and shipping real projects.
               </p>
@@ -97,8 +98,7 @@ export default function YouTubePage() {
               href={`${CHANNEL_URL}?sub_confirmation=1`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center justify-center rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-red-700 focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-950"
-              style={{ color: "#fff" }}
+              className="site-button-primary inline-flex shrink-0 items-center justify-center rounded-full px-6 py-3 font-semibold transition hover:px-7"
             >
               Subscribe on YouTube
             </a>
@@ -108,10 +108,10 @@ export default function YouTubePage() {
         <section aria-labelledby="channel-progress">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 id="channel-progress" className="text-2xl font-bold">
+              <h2 id="channel-progress" className="text-2xl font-semibold tracking-[-0.018em]">
                 Road to {SUBSCRIBER_GOAL.toLocaleString("en-US")}
               </h2>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="mt-1 text-sm text-[var(--site-muted)]">
                 {data
                   ? `${subscriberCount.toLocaleString("en-US")} of ${SUBSCRIBER_GOAL.toLocaleString("en-US")} subscribers — ${subscribersRemaining.toLocaleString("en-US")} to go.`
                   : error
@@ -119,12 +119,12 @@ export default function YouTubePage() {
                     : "Loading the latest subscriber count..."}
               </p>
             </div>
-            <p className="text-2xl font-black text-red-600 dark:text-red-400">
+            <p className="text-3xl font-medium tracking-[-0.025em]">
               {data ? `${progress}%` : "—"}
             </p>
           </div>
           <div
-            className="h-4 overflow-hidden rounded-full bg-red-100 dark:bg-red-950/60"
+            className="site-skeleton h-2 overflow-hidden rounded-full"
             role="progressbar"
             aria-label="Subscriber goal progress"
             aria-valuemin={0}
@@ -132,12 +132,12 @@ export default function YouTubePage() {
             aria-valuenow={subscriberCount}
           >
             <div
-              className="h-full rounded-full bg-red-600 transition-[width] duration-500"
+              className="h-full rounded-full bg-[var(--site-ink)] transition-[width] duration-500"
               style={{ width: `${data ? progress : 0}%` }}
             />
           </div>
           {error ? (
-            <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="mt-3 text-xs text-[var(--site-muted)]">
               Live channel statistics are temporarily unavailable. The channel
               and videos are still accessible below.
             </p>
@@ -145,7 +145,7 @@ export default function YouTubePage() {
         </section>
 
         <section
-          className="grid gap-3 sm:grid-cols-3"
+          className="grid sm:grid-cols-3"
           aria-label="Channel statistics"
         >
           <StatCard
@@ -167,14 +167,14 @@ export default function YouTubePage() {
 
         <section>
           <div className="mb-4">
-            <h2 className="text-2xl font-bold">Latest video</h2>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <h2 className="text-3xl font-medium tracking-[-0.025em]">Latest video</h2>
+            <p className="mt-1 text-sm text-[var(--site-muted)]">
               The newest upload from the channel.
             </p>
           </div>
 
           {data?.latestVideo ? (
-            <article className="grid overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/60 lg:grid-cols-[minmax(0,1.6fr)_minmax(16rem,1fr)]">
+            <article className="grid overflow-hidden border-y border-[var(--site-rule)] lg:grid-cols-[minmax(0,1.6fr)_minmax(16rem,1fr)]">
               <div className="aspect-video w-full bg-black">
                 <iframe
                   className="h-full w-full"
@@ -185,28 +185,28 @@ export default function YouTubePage() {
                 />
               </div>
               <div className="flex flex-col items-start justify-center p-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-red-600 dark:text-red-400">
+                <p className="studio-label text-[var(--site-muted)]">
                   Latest upload
                 </p>
-                <h3 className="mt-3 text-2xl font-bold">
+                <h3 className="mt-3 text-3xl font-medium tracking-[-0.025em]">
                   {data.latestVideo.title}
                 </h3>
-                <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="studio-caption mt-3">
                   Published {formatPublishedDate(data.latestVideo.publishedAt)}
                 </p>
                 <a
                   href={`https://www.youtube.com/watch?v=${data.latestVideo.videoId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 rounded-full border border-zinc-300 px-4 py-2 text-sm font-semibold transition hover:border-zinc-900 dark:border-zinc-700 dark:hover:border-zinc-100"
+                  className="mt-5 rounded-full border border-[var(--site-rule)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--site-ink)]"
                 >
                   Watch on YouTube
                 </a>
               </div>
             </article>
           ) : (
-            <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 dark:border-zinc-800 dark:bg-zinc-900/60">
-              <p className="text-zinc-600 dark:text-zinc-400">
+            <div className="site-panel p-6">
+              <p className="text-[var(--site-muted)]">
                 {isLoading
                   ? "Loading the latest upload..."
                   : "The latest video could not be loaded here."}
@@ -215,7 +215,7 @@ export default function YouTubePage() {
                 href={`${CHANNEL_URL}/videos`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex rounded-full border border-zinc-300 px-4 py-2 text-sm font-semibold transition hover:border-zinc-900 dark:border-zinc-700 dark:hover:border-zinc-100"
+                className="mt-4 inline-flex rounded-full border border-[var(--site-rule)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--site-ink)]"
               >
                 Browse videos on YouTube
               </a>
