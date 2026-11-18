@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import Footer from "./Footer";
 import Nav from "./nav";
+import SiteMotion from "./SiteMotion";
 
 type ContainerProps = {
   children: ReactNode;
@@ -10,12 +11,13 @@ type ContainerProps = {
   description?: string;
   type?: string;
   image?: string;
+  robots?: string;
 };
 
 function Container(props: ContainerProps) {
   const router = useRouter();
   const siteUrl = "https://charleskasasira.com";
-  const { children, ...customProps } = props;
+  const { children, robots = "follow, index", ...customProps } = props;
   const meta = {
     title: "Charles Kasasira | Software Designer and Developer",
     description:
@@ -26,10 +28,10 @@ function Container(props: ContainerProps) {
   };
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col">
+    <div className="site-shell relative flex min-h-screen w-full flex-col">
       <Head>
         <title>{meta.title}</title>
-        <meta name="robots" content="follow, index" />
+        <meta name="robots" content={robots} />
         <meta content={meta.description} name="description" />
         <meta property="og:url" content={`${siteUrl}${router.asPath}`} />
         <link rel="canonical" href={`${siteUrl}${router.asPath}`} />
@@ -44,11 +46,11 @@ function Container(props: ContainerProps) {
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
       </Head>
-      <div className="absolute inset-0 -z-10 dark:bg-[radial-gradient(circle_at_top,_rgba(251,146,60,0.2),transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(34,197,94,0.16),transparent_40%)]" />
+      <SiteMotion />
       <Nav />
       <main
         id="skip"
-        className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-10 sm:px-8 lg:px-12"
+        className="site-gutter flex w-full flex-1 flex-col pt-24"
       >
         {children}
       </main>

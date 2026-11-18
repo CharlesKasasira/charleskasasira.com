@@ -1,233 +1,218 @@
 import Container from "components/Container";
-import Image from "next/image";
+import { getAllPosts } from "lib/blog";
+import type { BlogPostSummary } from "lib/blog-shared";
+import { formatPostDate } from "lib/blog-shared";
+import type { GetStaticProps } from "next";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
-const focusAreas = [
+const expertise = [
+  "Product engineering",
+  "Frontend architecture",
+  "Design systems",
+  "Developer experience",
+  "Workflow automation",
+  "Technical education",
+];
+
+const selectedWork = [
   {
-    title: "Product Engineering",
-    description:
-      "Building polished web products from concept to deployment with a focus on performance and usability.",
+    name: "Git Quest",
+    description: "Learning Git through an interactive fractured timeline.",
+    href: "https://git.charleskasasira.com/",
+    category: "Developer education",
+    visual: "git",
   },
   {
-    title: "Creative Development",
-    description:
-      "Designing visual experiences that feel intentional, fast, and easy to understand on any device.",
-  },
-  {
-    title: "Education Content",
-    description:
-      "Sharing practical tutorials on YouTube to help developers ship clean and production-ready features.",
+    name: "Fala",
+    description: "Brazilian Portuguese for conversations that happen in real life.",
+    href: "https://portuguese.charleskasasira.com/",
+    category: "Learning product",
+    visual: "fala",
   },
 ];
 
-const featuredWork = [
+const sideProjects = [
   {
-    name: "Project Showcase",
-    description:
-      "A curated view of my open-source and client projects with GitHub stats and contribution activity.",
+    number: "01",
+    title: "Open-source work",
+    description: "Public tools, experiments, and repositories.",
     href: "/projects",
-    cta: "View projects",
   },
   {
-    name: "Live YouTube Metrics",
-    description:
-      "A real-time dashboard that tracks channel growth, total views, and uploaded videos.",
+    number: "02",
+    title: "YouTube",
+    description: "Practical lessons from building and shipping software.",
     href: "/youtube",
-    cta: "Open dashboard",
   },
   {
-    name: "Technical Writing",
-    description:
-      "Hands-on frontend engineering breakdowns and implementation guides published on my blog.",
-    href: "https://blog.charleskasasira.com",
-    cta: "Read articles",
-    external: true,
+    number: "03",
+    title: "Writing",
+    description: "Notes on code, systems, and what I am learning.",
+    href: "/blog",
   },
 ];
 
-const recentPosts = [
-  {
-    title: "CSS Art: Instagram Logo with pure CSS",
-    date: "May 21, 2022",
-    href: "https://blog.charleskasasira.com/css-art-instagram-logo-with-pure-css",
-  },
-  {
-    title: "Cheat sheet: Arrays in JavaScript",
-    date: "Jan 22, 2022",
-    href: "https://blog.charleskasasira.com/cheat-sheet-arrays-in-javascript",
-  },
-  {
-    title: "HOW TO: Click outside to close in Javascript",
-    date: "Jan 18, 2022",
-    href: "https://blog.charleskasasira.com/how-to-click-outside-to-close-in-javascript",
-  },
-];
+type HomeProps = {
+  recentPosts: BlogPostSummary[];
+};
 
-const videoIds = ["FtpN8QI9PuA", "1czjJGA5dHQ", "DAYoeJgolYg"];
-
-export default function Home() {
+export default function Home({ recentPosts }: HomeProps) {
   return (
     <Container
       title="Charles Kasasira | Product Engineer and Creator"
-      description="Kampala-based software designer and developer building useful digital products and educational content."
+      description="Kampala-based product engineer designing and building useful digital products, systems, and educational experiences."
     >
-      <section className="mb-16">
-        <div className="grid grid-cols-1 items-start gap-8 sm:grid-cols-[1fr,auto] sm:gap-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="min-w-0 space-y-6 sm:col-start-1"
-          >
-            <h1 className="text-4xl font-black leading-tight text-zinc-900 dark:text-zinc-100 md:text-6xl">
-              Building practical products, teaching what I learn.
-            </h1>
-            <p className="max-w-2xl text-lg text-zinc-700 dark:text-zinc-300">
-              I am Charles Kasasira, a Kampala-based engineer focused on
-              frontend architecture, product design systems, and developer
-              education through project-based tutorials.
+      <div className="studio-home">
+        <section className="min-h-[calc(100svh-6rem)] pt-[10vh]">
+          <h1 className="home-display studio-reveal">
+            <span>Product</span>
+            <span>Engineer</span>
+          </h1>
+
+          <div className="studio-label studio-reveal studio-reveal-delay-1 mt-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <Link
+              href="/about"
+              className="text-[var(--site-muted)] underline decoration-transparent underline-offset-4 transition hover:text-[var(--site-ink)] hover:decoration-current"
+            >
+              Charles Kasasira — Kampala, Uganda
+            </Link>
+            <p className="sm:text-right">
+              Kampala, Uganda
+              <br />
+              Designing in code
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                href="/projects"
-                className="primary-cta-text inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-5 text-sm font-semibold leading-none transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100"
-              >
-                Explore Projects
-              </Link>
-              <a
-                href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw?sub_confirmation=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-zinc-300 bg-transparent px-5 text-sm font-semibold leading-none text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-500 dark:bg-transparent dark:text-zinc-200 dark:hover:border-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
-              >
-                Subscribe on YouTube
-              </a>
+          </div>
+
+          <div className="mt-[15vh] grid gap-12 pb-[9vh] lg:grid-cols-[minmax(0,1.65fr)_minmax(18rem,0.75fr)] lg:items-end">
+            <p className="studio-reveal studio-reveal-delay-2 max-w-[29ch] text-balance text-[clamp(1.75rem,3.4vw,3rem)] leading-[1.2] tracking-[-0.02em] text-[var(--site-muted)]">
+              I turn complex ideas into{" "}
+              <em className="not-italic text-[var(--site-ink)]">
+                useful products
+              </em>
+              , then share what the work taught me.
+            </p>
+
+            <div className="studio-reveal studio-reveal-delay-3">
+              <p className="section-label">Expertise</p>
+              <ul className="grid grid-cols-2 gap-x-6">
+                {expertise.map((item) => (
+                  <li
+                    key={item}
+                    className="border-b border-[var(--site-rule)] py-2 text-sm font-medium"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </motion.div>
+          </div>
+        </section>
 
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex shrink-0 justify-center sm:col-start-2 sm:justify-end"
-          >
-            <Image
-              src="/pole.png"
-              alt="Charles Kasasira portrait"
-              width={180}
-              height={180}
-              className="h-[180px] w-[180px] shrink-0 rounded-full object-cover"
-              priority
-            />
-          </motion.div>
-        </div>
-      </section>
+        <section id="work">
+          <div className="studio-section-heading">
+            <h2>Selected work</h2>
+            <b>Built to be used</b>
+          </div>
 
-      <section className="mb-16">
-        <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          What I Focus On
-        </h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          {focusAreas.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900/60"
-            >
-              <h3 className="mb-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                {item.title}
-              </h3>
-              <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                {item.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
+          <div className="selected-work-grid">
+            {selectedWork.map((project, index) => (
+              <article
+                key={project.name}
+                className={index === 0 ? "work-tile work-tile-wide" : "work-tile work-tile-narrow"}
+              >
+                <a href={project.href} target="_blank" rel="noopener noreferrer">
+                  <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+                    <h3 className="text-[clamp(1.75rem,2.5vw,2.5rem)] font-medium leading-[1.05] tracking-[-0.025em]">
+                      {project.name}
+                    </h3>
+                    <p className="max-w-[24ch] text-sm leading-5 text-[var(--site-muted)] sm:text-right">
+                      {project.description}
+                    </p>
+                  </div>
 
-      <section className="mb-16">
-        <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          Featured
-        </h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          {featuredWork.map((item) => (
-            <article
-              key={item.name}
-              className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-xs dark:border-zinc-800 dark:bg-zinc-900/60"
-            >
-              <h3 className="mb-3 text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                {item.name}
-              </h3>
-              <p className="mb-4 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                {item.description}
-              </p>
-              {item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-semibold text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
-                >
-                  {item.cta}
+                  {project.visual === "git" ? (
+                    <div className="project-visual project-visual-git">
+                      <div className="terminal-window">
+                        <div className="terminal-bar">
+                          <i />
+                          <i />
+                          <i />
+                          <span>git-quest — timeline</span>
+                        </div>
+                        <div className="terminal-body">
+                          <p>$ git log --oneline</p>
+                          <p className="text-emerald-300">a81f2c7 restore the future</p>
+                          <p className="text-amber-200">c04d991 fractured timeline</p>
+                          <p className="text-white/45">8b21a03 where it began</p>
+                          <p className="mt-6 text-white/75">Your next move?</p>
+                          <span className="terminal-cursor" />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="project-visual project-visual-fala">
+                      <div className="fala-word fala-word-one">Oi!</div>
+                      <div className="fala-card">
+                        <span>Today&apos;s phrase</span>
+                        <strong>Como você está?</strong>
+                        <p>How are you?</p>
+                      </div>
+                      <div className="fala-word fala-word-two">Tudo bem.</div>
+                    </div>
+                  )}
+
+                  <div className="studio-label mt-3 flex items-center justify-between">
+                    <span>{project.category}</span>
+                    <span>Visit ↗</span>
+                  </div>
                 </a>
-              ) : (
-                <Link
-                  href={item.href}
-                  className="text-sm font-semibold text-amber-700 hover:text-amber-800 dark:text-amber-300 dark:hover:text-amber-200"
-                >
-                  {item.cta}
-                </Link>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section className="mb-8 grid gap-8 md:grid-cols-2">
-        <div>
-          <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-            Recent Writing
-          </h2>
-          <div className="space-y-3">
-            {recentPosts.map((post) => (
-              <a
-                key={post.href}
-                href={post.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-2xl border border-zinc-200 bg-zinc-50 p-4 transition hover:-translate-y-0.5 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900/60 dark:hover:border-zinc-700"
-              >
-                <p className="mb-2 text-xs uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400">
-                  {post.date}
-                </p>
-                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                  {post.title}
-                </h3>
-              </a>
+        <section className="mt-[18vh]">
+          <div className="studio-section-heading">
+            <h2>Things I make</h2>
+            <b>On the side</b>
+          </div>
+          <div>
+            {sideProjects.map((project) => (
+              <Link key={project.number} href={project.href} className="studio-row">
+                <span className="studio-row-number">{project.number}</span>
+                <strong>{project.title}</strong>
+                <span className="studio-row-description">{project.description}</span>
+                <span className="studio-row-action">View →</span>
+              </Link>
             ))}
           </div>
-        </div>
-        <div>
-          <h2 className="mb-4 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-            Latest Tutorials
-          </h2>
-          <div className="space-y-3">
-            {videoIds.map((videoId) => (
-              <div
-                key={videoId}
-                className="overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50 p-2 dark:border-zinc-800 dark:bg-zinc-900/60"
-              >
-                <iframe
-                  className="aspect-video w-full rounded-xl"
-                  loading="lazy"
-                  title={`YouTube video ${videoId}`}
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                />
-              </div>
+        </section>
+
+        <section className="mt-[18vh]">
+          <div className="studio-section-heading">
+            <h2>Writing</h2>
+            <b>Recent notes</b>
+          </div>
+          <div>
+            {recentPosts.map((post, index) => (
+              <Link key={post.slug} href={"/blog/" + post.slug} className="studio-row">
+                <span className="studio-row-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <strong>{post.title}</strong>
+                <span className="studio-row-description">
+                  {formatPostDate(post.date)} · {post.readingMinutes} min
+                </span>
+                <span className="studio-row-action">Read →</span>
+              </Link>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </Container>
   );
 }
+
+export const getStaticProps = (async () => ({
+  props: { recentPosts: getAllPosts().slice(0, 4) },
+})) satisfies GetStaticProps<HomeProps>;

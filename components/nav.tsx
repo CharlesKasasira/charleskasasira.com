@@ -15,12 +15,15 @@ function NavItem({
   external?: boolean;
 }) {
   const router = useRouter();
-  const isActive = !external && router.asPath === href;
+  const isActive =
+    !external &&
+    (router.asPath === href ||
+      (href !== "/" && router.asPath.startsWith(`${href}/`)));
   const baseClasses =
-    "rounded-full px-4 py-2 text-sm transition duration-200 hover:-translate-y-0.5";
+    "inline-flex h-11 items-center rounded-full px-4 text-sm font-medium transition-[background-color,color,padding] duration-300 ease-out hover:px-5";
   const activeClasses = isActive
-    ? "primary-cta-text bg-zinc-900 dark:bg-zinc-100"
-    : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800";
+    ? "nav-item-active"
+    : "bg-[var(--site-surface)] text-[var(--site-ink)] backdrop-blur-xl hover:bg-[var(--site-surface-hover)]";
 
   if (external) {
     return (
@@ -38,7 +41,11 @@ function NavItem({
   }
   return (
     <li className="hidden md:inline-block">
-      <Link href={href} className={`${baseClasses} ${activeClasses}`}>
+      <Link
+        href={href}
+        aria-current={isActive ? "page" : undefined}
+        className={`${baseClasses} ${activeClasses}`}
+      >
         {text}
       </Link>
     </li>
@@ -49,13 +56,16 @@ function Nav() {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/90 py-5 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/90">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
+    <nav
+      aria-label="Primary navigation"
+      className="pointer-events-none fixed inset-x-0 top-4 z-50 w-full"
+    >
+      <div className="site-gutter flex w-full items-center justify-between gap-3">
         <a href="#skip" className="skip-nav">
           Skip to content
         </a>
 
-        <div className="flex items-center gap-3">
+        <div className="pointer-events-auto flex min-w-0 items-center gap-2">
           <MobileMenu />
           <ul className="flex items-center gap-2">
             {menuData.map((menu) => (
@@ -68,14 +78,21 @@ function Nav() {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="pointer-events-auto flex items-center gap-2">
+          <Link
+            href="/projects"
+            className="hidden h-11 items-center gap-2 rounded-full bg-[var(--site-surface)] px-4 text-sm font-medium text-[var(--site-ink)] backdrop-blur-xl transition hover:bg-[var(--site-surface-hover)] lg:inline-flex"
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-600 ring-4 ring-emerald-600/10" />
+            View projects
+          </Link>
           <DarkModeSwitch
             style={{ marginBottom: "0" }}
             checked={resolvedTheme === "dark"}
             onChange={() =>
               setTheme(resolvedTheme === "dark" ? "light" : "dark")
             }
-            size={25}
+            size={20}
           />
         </div>
       </div>
