@@ -2,35 +2,6 @@ import Container from "components/Container";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  AiFillGithub,
-  AiFillLinkedin,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from "react-icons/ai";
-
-const socialLinks = [
-  {
-    name: "GitHub",
-    href: "https://github.com/charleskasasira",
-    icon: <AiFillGithub size={24} />,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/charleskasasira/",
-    icon: <AiFillLinkedin size={24} />,
-  },
-  {
-    name: "YouTube",
-    href: "https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw",
-    icon: <AiFillYoutube size={24} />,
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/kasasirac",
-    icon: <AiOutlineTwitter size={24} />,
-  },
-];
 
 const focusAreas = [
   {
@@ -109,9 +80,6 @@ export default function Home() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="min-w-0 space-y-6 sm:col-start-1"
           >
-            <p className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-50 px-4 py-1 text-xs font-medium tracking-[0.12em] text-amber-900 dark:border-amber-400/40 dark:bg-amber-500/20 dark:text-amber-100">
-              SOFTWARE DESIGNER + DEVELOPER
-            </p>
             <h1 className="text-4xl font-black leading-tight text-zinc-900 dark:text-zinc-100 md:text-6xl">
               Building practical products, teaching what I learn.
             </h1>
@@ -123,7 +91,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/projects"
-                className="primary-cta-text rounded-full bg-zinc-900 px-5 py-3 text-sm font-semibold transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100"
+                className="primary-cta-text inline-flex h-12 items-center justify-center rounded-full bg-zinc-900 px-5 text-sm font-semibold leading-none transition hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100"
               >
                 Explore Projects
               </Link>
@@ -131,24 +99,10 @@ export default function Home() {
                 href="https://www.youtube.com/channel/UClhrdUmdjbQi9fMq3R65BVw?sub_confirmation=1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border-2 border-zinc-300 bg-transparent px-5 py-3 text-sm font-semibold text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-500 dark:bg-transparent dark:text-zinc-200 dark:hover:border-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+                className="inline-flex h-12 items-center justify-center rounded-full border-2 border-zinc-300 bg-transparent px-5 text-sm font-semibold leading-none text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-500 dark:bg-transparent dark:text-zinc-200 dark:hover:border-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
               >
                 Subscribe on YouTube
               </a>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full border border-zinc-300 p-2 text-zinc-700 transition hover:-translate-y-0.5 hover:border-zinc-900 hover:text-zinc-900 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-200 dark:hover:text-zinc-100"
-                  aria-label={link.name}
-                >
-                  {link.icon}
-                </a>
-              ))}
             </div>
           </motion.div>
 

@@ -83,9 +83,6 @@ export default function YouTubePage() {
     >
       <div className="mb-4 w-full space-y-10 text-zinc-900 dark:text-zinc-100">
         <section className="space-y-5">
-          <p className="inline-flex rounded-full border border-red-500/30 bg-red-50 px-4 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 dark:border-red-400/30 dark:bg-red-500/10 dark:text-red-200">
-            YOUTUBE
-          </p>
           <div className="flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
             <div>
               <h1 className="text-4xl font-black tracking-tight md:text-5xl">
