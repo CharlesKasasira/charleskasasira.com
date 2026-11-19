@@ -16,12 +16,14 @@
     "build": "next build --webpack",
     "blog:sync": "node scripts/sync-hashnode.mjs",
     "blog:sync:test": "node --test scripts/sync-hashnode.test.mjs",
+    "blog:migration:test": "node --test tests/blog-migration.test.mjs",
     "test:e2e": "npm run build && playwright test",
     "start": "next start",
     "lint": "eslint . --max-warnings=0"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.1.0",
     "classnames": "^2.5.1",
     "framer-motion": "^11.0.0",
     "gray-matter": "^4.0.3",
